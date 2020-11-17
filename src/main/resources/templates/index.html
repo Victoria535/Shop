@@ -1,0 +1,715 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>Shop</title>
+
+</head>
+<style>
+    body {
+        background: white;
+    }
+
+    #header {
+        height: 50px;
+    }
+
+    .navigation {
+        width: 110%;
+        height: 50px;
+        font-size: 16px;
+        line-height: 50px;
+        position: fixed;
+        top: 0;
+        left: -10px;
+        z-index: 1000;
+        background: black;
+        color: #FFF;
+        border-bottom: solid 1px #333;
+        transition: background-color 0.2s linear;
+    }
+
+    .navigation ul {
+        width: 100%;
+        padding-left: 0;
+        margin: 0 auto;
+        display: block;
+    }
+
+    #menu li {
+        float: left;
+        list-style: none;
+        padding: 0 25px;
+    }
+
+    #menu a {
+        color: #fff;
+        font-size: 19px;
+        text-decoration: none;
+        font-family: MS Serif;
+    }
+
+    #menu>li a:hover {
+        color: red;
+        transition: color 0.5s ease;
+    }
+
+    .product-wrapper {
+        width: 100%;
+        float: left;
+        text-decoration: none;
+    }
+
+    @media only screen and (min-width: 450px) {
+        .product-wrapper {
+            width: 50%;
+        }
+    }
+
+    @media only screen and (min-width: 768px) {
+        .product-wrapper {
+            width: 33.333%;
+        }
+    }
+
+    @media only screen and (min-width: 1000px) {
+        .product-wrapper {
+            width: 25%;
+        }
+    }
+
+    .product {
+        display: block;
+        position: relative;
+        text-decoration: none;
+        border: 1px solid #474747;
+        border-radius: 3px;
+        background: #fff;
+        margin: 0 10px 0 0;
+        height: 300px;
+        left: -15px;
+    }
+    .products {
+        list-style: none;
+    }
+
+    .product-photo {
+        position: relative;
+        padding-bottom: 100%;
+        overflow: hidden;
+    }
+
+    .product-photo img {
+        position: absolute;
+        top: -100px;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        max-width: 65%;
+        max-height: 65%;
+        margin: auto;
+        transition: transform .4s ease-out;
+    }
+
+    .product:hover .product-photo img {
+        transform: scale(1.1);
+    }
+
+    .title {
+        bottom: 115px;
+        text-align: center;
+        position: relative;
+        color: black;
+        text-decoration: none;
+        font-family: URW Chancery L, cursive;
+        font-weight: 500;
+    }
+
+    .desc {
+        bottom: 130px;
+        text-align: center;
+        position: relative;
+        overflow: hidden;
+        color: black;
+        font-family: URW Chancery L, cursive;
+    }
+
+    .price {
+        position: relative;
+        bottom: 140px;
+        left: 5px;
+        width: 65px;
+        height: 25px;
+        color: black;
+        font-size: 20px;
+        font-family: "Bell MT";
+        text-align: center;
+        background: #ff751d;
+        border-radius: 2px;
+    }
+
+    .soldbut{
+        position: relative;
+        bottom: 32px;
+        right: -225px;
+        width: 65px;
+        height: 25px;
+        background: url(./cart.png) no-repeat center;
+        background-color: cadetblue;
+        text-decoration: none;
+        user-select: none;
+        padding: .5em 2em;
+        outline: none;
+        border: 2px solid black;
+        border-radius: 3px;
+        transition: 0.2s;
+    }
+    .soldbut:hover {
+        background-color: #b31206;
+        transform: scale(1.1);
+
+    }
+
+    .input_search {
+        width: 250px;
+        height: 40px;
+        bottom: 9px;
+        padding-left: 15px;
+        border-radius: 42px;
+        border: 2px solid #324b4e;
+        background: #F9F0DA;
+        color: black;
+        outline: none;
+        position: relative;
+        transition: .3s linear;
+    }
+
+    .searchbut {
+        width: 40px;
+        height: 40px;
+        background: url(./search.png) no-repeat center;
+        border: none;
+        outline: none;
+        position: relative;
+        left: -50px;
+        top: 5px;
+    }
+    .searchbut:focus {
+        outline: none;
+        border: 0;
+    }
+
+    .poket {
+        margin-left: 62px;
+    }
+
+    .searh {
+        margin-left: 280px;
+    }
+
+    .icon {
+        height: 45px;
+        width: 45px;
+    }
+    /* Боковое навигационное меню */
+    .sidenav {
+        height: 100%; /* 100% Full-height */
+        width: 0; /* 0 ширина - изменить это с помощью JavaScript */
+        position: fixed; /* Оставайтесь на месте */
+        z-index: 1; /* Оставайтесь сверху */
+        top: 0; /* Оставайтесь наверху */
+        left: 0;
+        background-color: #111; /* Фон черный*/
+        overflow-x: hidden; /* Отключить горизонтальную прокрутку */
+        padding-top: 60px; /* Поместите контент в 60px сверху */
+        transition: 0.5s; /* 0.5 второй эффект перехода слайда в боковой навигации */
+    }
+
+    /* Ссылки меню навигации */
+    .sidenav a {
+        padding: 8px 8px 8px 32px;
+        text-decoration: none;
+        font-size: 25px;
+        color: #818181;
+        display: block;
+        transition: 0.3s;
+    }
+
+    /* Когда вы наводите курсор мыши на навигационные ссылки, изменяется их цвет */
+    .sidenav a:hover {
+        color: #f1f1f1;
+    }
+
+    /* Положение и стиль кнопки закрытия (верхний правый угол) */
+    .sidenav .closebtn {
+        position: absolute;
+        top: 50px;
+        right: 25px;
+        font-size: 36px;
+        margin-left: 50px;
+        color: white;
+    }
+
+    /* На экранах меньшего размера, где высота меньше 450px, измените стиль sidenav (меньше отступов и меньший размер шрифта) */
+    @media screen and (max-height: 450px) {
+        .sidenav {padding-top: 15px;}
+        .sidenav a {font-size: 18px;}
+    }
+    .name{
+        color: white;
+        font-size: 18px;
+    }
+    .name span{
+        color: red;
+    }
+    .acNumber{
+        color: white;
+        font-size: 18px;
+    }
+    .acNumber span{
+        margin-left: 5px;
+    }
+
+    .userSpan{
+        display: none;
+    }
+
+/*    Корзина*/
+    .img_bucket{
+        height: 45px;
+        width: 45px;
+    }
+
+    a {
+        text-decoration:none;
+    }
+    a:hover {
+        text-decoration:underline;
+    }
+
+    /* Page layout > */
+    .page-wrapper {
+        display:table;
+        vertical-align:middle;
+        text-align:center;
+        table-layout:fixed;
+        width:100%;
+        height:100%;
+    }
+    .page-wrapper__in {
+        display:table-cell;
+        vertical-align:top;
+        padding:40px;
+    }
+    /* Page layout < */
+
+    /* Support classes > */
+    .emphasis {
+        color:#e54040;
+    }
+    .desc_buck{
+        font-size: 10px;
+        color: black;
+        text-align: left;
+    }
+    .more {
+        padding-right:.8333em;
+        position:relative;
+        text-decoration:none;
+    }
+    .more:after {
+        content:"\00A0\003E";
+        position:absolute;
+        top:0;
+        right:0;
+        text-decoration:none;
+        z-index:-1;
+        border:0;
+    }
+    a.more:hover:after {
+        text-decoration:none;
+    }
+    /* Support classes < */
+
+    /* Tooltip > */
+    .tooltip {
+        position:absolute;
+        display:block;
+        width:228px;
+        z-index:1;
+        background:#fff;
+        border:transparent 1px solid;
+        border-radius:5px;
+        box-shadow:0 0 3px 0 rgba(0, 0, 0, 0.5);
+    }
+    .tooltip:before {
+        display:block;
+        content:"";
+        transform:rotate(55deg) skewX(20deg);
+        width:17px;
+        height:17px;
+        background:#fefefe;
+        background:url(data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiA/Pgo8c3ZnIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgd2lkdGg9IjEwMCUiIGhlaWdodD0iMTAwJSIgdmlld0JveD0iMCAwIDEgMSIgcHJlc2VydmVBc3BlY3RSYXRpbz0ibm9uZSI+CiAgPGxpbmVhckdyYWRpZW50IGlkPSJncmFkLXVjZ2ctZ2VuZXJhdGVkIiBncmFkaWVudFVuaXRzPSJ1c2VyU3BhY2VPblVzZSIgeDE9IjAlIiB5MT0iMCUiIHgyPSIxMDAlIiB5Mj0iMTAwJSI+CiAgICA8c3RvcCBvZmZzZXQ9IjAlIiBzdG9wLWNvbG9yPSIjZmVmZWZlIiBzdG9wLW9wYWNpdHk9IjEiLz4KICAgIDxzdG9wIG9mZnNldD0iMTAwJSIgc3RvcC1jb2xvcj0iI2Y4ZjhmOCIgc3RvcC1vcGFjaXR5PSIxIi8+CiAgPC9saW5lYXJHcmFkaWVudD4KICA8cmVjdCB4PSIwIiB5PSIwIiB3aWR0aD0iMSIgaGVpZ2h0PSIxIiBmaWxsPSJ1cmwoI2dyYWQtdWNnZy1nZW5lcmF0ZWQpIiAvPgo8L3N2Zz4=);
+        background:linear-gradient(135deg, #fefefe 0%, #f8f8f8 100%);
+        box-shadow:0 0 3px 0 rgba(0, 0, 0, 0.5);
+        position:absolute;
+        top:-10px;
+        left:50%;
+        margin:0 0 0 -8px;
+        z-index:-1;
+    }
+    .tooltip:after {
+        content:"";
+        font:0/0 a;
+        display:block;
+        position:absolute;
+        top:auto;
+        left:0;
+        bottom:100%;
+        width:100%;
+        height:74px;
+        z-index:-1;
+    }
+    .tooltip_pos_top {
+        left:50%;
+        top:100%;
+        margin:32px 0 0 -115px;
+    }
+    .tooltip-item {
+        margin:0;
+    }
+    .tooltip-item_side_left,
+    .tooltip-item_side_right,
+    .tooltip-item_side_center{
+        float: left;
+    }
+    .tooltip-item_side_right {
+        clear:right;
+        text-align:right;
+    }
+
+    .tooltip-item__content {
+        margin:0;
+        color:#4d4d4d;
+        font-weight:bold;
+        font-size:20px;
+    }
+
+
+    .tooltip-item_side_left>.tooltip-item__content {
+        padding:18px 10px 10px 15px;
+    }
+    .tooltip-item_side_right>.tooltip-item__content {
+        padding:10px 10px 5px 10px;
+    }
+
+    /* Tooltip < */
+
+    /* Actions list > */
+    .actions-list {
+        list-style:none;
+        margin:0;
+        padding:0;
+        overflow:hidden;
+    }
+    .actions-list__item {
+        margin:0;
+    }
+    .actions-list__item_side_left,
+    .actions-list__item_side_right {
+        float:left;
+        width:50%;
+        display:inline;
+    }
+    .actions-list__item_side_right {
+        clear:right;
+        text-align:right;
+    }
+    .actions-list .more {
+        font:12px/25px "Lucida Sans Unicode", "Lucida Grande", sans-serif;
+        padding-right:10em;
+        color:#e54040;
+        visibility: visible;
+    }
+
+    /* Actions list < */
+
+    /* Button > */
+    .button {
+        display:inline-block;
+        height:25px;
+        color:#fff;
+        font:12px/25px "Lucida Sans Unicode", "Lucida Grande", sans-serif;
+        text-shadow:0px -1px 0px rgba(0, 0, 0, 0.15);
+        border-radius:3px;
+        padding:0 10px;
+        border:transparent 1px solid;
+        background:#e54040;
+        background:url(data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiA/Pgo8c3ZnIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgd2lkdGg9IjEwMCUiIGhlaWdodD0iMTAwJSIgdmlld0JveD0iMCAwIDEgMSIgcHJlc2VydmVBc3BlY3RSYXRpbz0ibm9uZSI+CiAgPGxpbmVhckdyYWRpZW50IGlkPSJncmFkLXVjZ2ctZ2VuZXJhdGVkIiBncmFkaWVudFVuaXRzPSJ1c2VyU3BhY2VPblVzZSIgeDE9IjAlIiB5MT0iMCUiIHgyPSIwJSIgeTI9IjEwMCUiPgogICAgPHN0b3Agb2Zmc2V0PSIwJSIgc3RvcC1jb2xvcj0iI2Y2NmE2YSIgc3RvcC1vcGFjaXR5PSIxIi8+CiAgICA8c3RvcCBvZmZzZXQ9IjIzJSIgc3RvcC1jb2xvcj0iI2YyNjE2MSIgc3RvcC1vcGFjaXR5PSIxIi8+CiAgICA8c3RvcCBvZmZzZXQ9Ijc3JSIgc3RvcC1jb2xvcj0iI2U1M2YzZiIgc3RvcC1vcGFjaXR5PSIxIi8+CiAgICA8c3RvcCBvZmZzZXQ9IjEwMCUiIHN0b3AtY29sb3I9IiNlMTM1MzUiIHN0b3Atb3BhY2l0eT0iMSIvPgogIDwvbGluZWFyR3JhZGllbnQ+CiAgPHJlY3QgeD0iMCIgeT0iMCIgd2lkdGg9IjEiIGhlaWdodD0iMSIgZmlsbD0idXJsKCNncmFkLXVjZ2ctZ2VuZXJhdGVkKSIgLz4KPC9zdmc+);
+        background:linear-gradient(to bottom, #f66a6a 1%, #f26161 23%, #e53f3f 77%, #e13535 99%), linear-gradient(to bottom, #d35050 0%, #e06b6b 100%);
+    }
+    .button:hover {
+        background:#f15c5c;
+        background:url(data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiA/Pgo8c3ZnIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgd2lkdGg9IjEwMCUiIGhlaWdodD0iMTAwJSIgdmlld0JveD0iMCAwIDEgMSIgcHJlc2VydmVBc3BlY3RSYXRpbz0ibm9uZSI+CiAgPGxpbmVhckdyYWRpZW50IGlkPSJncmFkLXVjZ2ctZ2VuZXJhdGVkIiBncmFkaWVudFVuaXRzPSJ1c2VyU3BhY2VPblVzZSIgeDE9IjAlIiB5MT0iMCUiIHgyPSIwJSIgeTI9IjEwMCUiPgogICAgPHN0b3Agb2Zmc2V0PSIwJSIgc3RvcC1jb2xvcj0iI2YxNWM1YyIgc3RvcC1vcGFjaXR5PSIxIi8+CiAgICA8c3RvcCBvZmZzZXQ9IjI3JSIgc3RvcC1jb2xvcj0iI2VjNTE1MSIgc3RvcC1vcGFjaXR5PSIxIi8+CiAgICA8c3RvcCBvZmZzZXQ9Ijc3JSIgc3RvcC1jb2xvcj0iI2RmMzIzMiIgc3RvcC1vcGFjaXR5PSIxIi8+CiAgICA8c3RvcCBvZmZzZXQ9IjEwMCUiIHN0b3AtY29sb3I9IiNkYjI4MjgiIHN0b3Atb3BhY2l0eT0iMSIvPgogIDwvbGluZWFyR3JhZGllbnQ+CiAgPHJlY3QgeD0iMCIgeT0iMCIgd2lkdGg9IjEiIGhlaWdodD0iMSIgZmlsbD0idXJsKCNncmFkLXVjZ2ctZ2VuZXJhdGVkKSIgLz4KPC9zdmc+);
+       background:linear-gradient(to bottom, #f15c5c 1%, #ec5151 27%, #df3232 77%, #db2828 99%), linear-gradient(to bottom, #d35050 0%, #e06b6b 100%);
+        background-origin:padding-box, border-box;
+        background-clip:padding-box, border-box;
+    }
+    .button:active {
+        box-shadow:0px 1px 3px 0px rgba(0, 0, 0, 0.2) inset;
+    }
+    a.button {
+        text-decoration:none;
+    }
+    /* Button < */
+
+    /* Shopping cart > */
+    .shopping-cart {
+        display:inline-block;
+        position:relative;
+        z-index:10;
+    }
+
+
+    .shopping-cart__tooltip {
+        opacity:0;
+        position:fixed;
+        top:-9999px;
+        left:-9999px;
+        visibility:hidden;
+        text-align:left;
+        transition:opacity .6s
+    }
+    .shopping-cart:hover .shopping-cart__tooltip {
+        opacity:1;
+        visibility:visible;
+        position:absolute;
+        top:100%;
+        left:50%;
+    }
+    .shopping-cart__actions {
+        position:relative;
+        clear:both;
+        margin:16px 18px 0;
+        padding:16px 0;
+    }
+    .shopping-cart__actions:before {
+        content:"";
+        display:block;
+        height:1px;
+        position:absolute;
+        top:0;
+        left:-9px;
+        width:100%;
+        padding:0 9px;
+        box-shadow:0px -1px 1px 0px rgba(0, 0, 0, 0.08);
+        background:url(data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiA/Pgo8c3ZnIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgd2lkdGg9IjEwMCUiIGhlaWdodD0iMTAwJSIgdmlld0JveD0iMCAwIDEgMSIgcHJlc2VydmVBc3BlY3RSYXRpbz0ibm9uZSI+CiAgPGxpbmVhckdyYWRpZW50IGlkPSJncmFkLXVjZ2ctZ2VuZXJhdGVkIiBncmFkaWVudFVuaXRzPSJ1c2VyU3BhY2VPblVzZSIgeDE9IjAlIiB5MT0iMCUiIHgyPSIxMDAlIiB5Mj0iMCUiPgogICAgPHN0b3Agb2Zmc2V0PSIwJSIgc3RvcC1jb2xvcj0iI2ZmZmZmZiIgc3RvcC1vcGFjaXR5PSIwIi8+CiAgICA8c3RvcCBvZmZzZXQ9IjUwJSIgc3RvcC1jb2xvcj0iI2RkZGRkZCIgc3RvcC1vcGFjaXR5PSIxIi8+CiAgICA8c3RvcCBvZmZzZXQ9IjEwMCUiIHN0b3AtY29sb3I9IiNmZmZmZmYiIHN0b3Atb3BhY2l0eT0iMCIvPgogIDwvbGluZWFyR3JhZGllbnQ+CiAgPHJlY3QgeD0iMCIgeT0iMCIgd2lkdGg9IjEiIGhlaWdodD0iMSIgZmlsbD0idXJsKCNncmFkLXVjZ2ctZ2VuZXJhdGVkKSIgLz4KPC9zdmc+);
+      background:linear-gradient(to right, rgba(255, 255, 255, 0) 0%, rgba(221, 221, 221, 1) 50%, rgba(255, 255, 255, 0) 100%);
+    }
+    /* Shopping cart < */
+    .button_send{
+        position: relative;
+        padding: 10px;
+        margin: 5px 0;
+        height: 30px;
+        width: 100px;
+    }
+    .input_send{
+        padding: 10px;
+        margin: 5px 0;
+        width: 150px;
+        height: 10px;
+    }
+
+</style>
+
+<body>
+
+<div id="header">
+    <div class="navigation">
+        <ul id="menu">
+            <li><img class="icon" src="icon.jpg" onclick="openNav()" alt=""></li>
+            <li><a href="">Каши</a></li>
+            <li><a href="">Что-то</a></li>
+            <li><a href="">Сладкое</a></li>
+            <li>
+                <div class="searh">
+                    <input id="search_field" class="input_search" type="text" placeholder="Искать здесь...">
+                    <button onclick="searchByName()" type="submit" class="searchbut"></button>
+                </div>
+            </li>
+
+            <li class="poket">
+                <div class="shopping-cart">
+                    <a href="#"> Корзина </a>
+                <div class="shopping-cart__tooltip tooltip tooltip_pos_top">
+                    <dl class="shopping-cart__item tooltip-item tooltip-item_side_left">
+                        <dd class="tooltip-item__content">
+                            <img src="sugar.jpg" class="img_bucket" alt="">
+                        </dd>
+                        </dd>
+                    </dl>
+
+                    <dl class="shopping-cart__item tooltip-item tooltip-item_side_center">
+                        <dd class="tooltip-item__content">
+                            <div class="desc_buck">
+                            <span> Сахар "Слуцкий"</span>
+                                <br>
+                                <span>1 шт.</span>
+                            </div>
+                        </dd>
+                    </dl>
+
+
+                    <dl class="shopping-cart__item tooltip-item tooltip-item_side_right">
+                        <dd class="tooltip-item__content">
+                            <span class="emphasis">4.0р</span>
+                        </dd>
+                    </dl>
+                    <ul class="shopping-cart__actions actions-list">
+                        <li class="actions-list__item actions-list__item_side_left">
+                            <p class="more">Итого: 220000</p>
+                        </li>
+                        <li class="actions-list__item actions-list__item_side_right">
+                            <a href="#" class="button __button">Купить</a>
+                        </li>
+                    </ul>
+                </div>
+                </div>
+      </li>
+
+            <li sec:authorize="!isAuthenticated()"> <a href="/login">Войти</a></li>
+            <li sec:authorize="isAuthenticated()"> <a th:href="@{/logout}">Выйти</a></li>
+        </ul>
+    </div>
+</div>
+
+
+
+<div sec:authorize="isAuthenticated()" id="mySidenav" class="sidenav">
+
+</div>
+
+    <ul id="productList" class="products clearfix">
+
+    </ul>
+<div>
+    <ul id="userInfo" >
+
+    </ul>
+</div>
+<span class="userSpan" id="usernameAuth" th:text="${#authentication.getName()}"></span>
+
+    <script>
+        /* Установите ширину боковой навигации до 250 пикселей */
+        function openNav() {
+            document.getElementById("mySidenav").style.width = "250px";
+            infoAboutUser();
+        }
+
+        /* Установите ширину боковой навигации на 0 */
+        function closeNav() {
+            document.getElementById("mySidenav").style.width = "0";
+        }
+    function searchByName() {
+        var name = document.getElementById("search_field").value;
+        var xhttp = new XMLHttpRequest();
+        xhttp.onreadystatechange = function () {
+            if (this.readyState == 4 && this.status == 200) {
+                var products = JSON.parse(this.responseText);
+                var html= '';
+                for (var i = 0; i < products.length; i++) {
+                    var product = products[i];
+                    console.log(product);
+                    html = html +'  <li class="product-wrapper">\n' +
+                        '            <a href="" class="product">\n' +
+                        '                <div class="product-photo">\n' +
+                        '                    <img src="'+product.path+'" alt="">\n' +
+                        '                </div>\n' +
+                        '                <p class="title" >'+product.name +'</p>\n' +
+                        '                <p class="desc">'+product.description+'</p>\n' +
+                        '                <p class="price">'+product.cost+'</p>\n' +
+                        '            </a>\n' +
+                        '             <button sec:authorize="isAuthenticated()" onclick="saveToBucket('+product.id+')"  class="soldbut"></button>\n'+
+                        '        </li>';
+                }
+
+                document.getElementById("productList").innerHTML = html;
+            }
+        };
+        xhttp.open("GET", "http://localhost:8080/products/search?name=" + name, true);
+        xhttp.send();
+    }
+
+    function loadProducts() {
+        var xhttp = new XMLHttpRequest();
+        xhttp.onreadystatechange = function () {
+            if (this.readyState == 4 && this.status == 200) {
+                var products = JSON.parse(this.responseText);
+                var html= '';
+                for (var i = 0; i < products.length; i++) {
+                    var product = products[i];
+                    console.log(product);
+                    html = html +'  <li class="product-wrapper">\n' +
+                        '            <a href="" class="product">\n' +
+                        '                <div class="product-photo">\n' +
+                        '                    <img src="'+product.path+'" alt="">\n' +
+                        '                </div>\n' +
+                        '                <p class="title" >'+product.name +'</p>\n' +
+                        '                <p class="desc">'+product.description+'</p>\n' +
+                        '                <p class="price">'+product.cost+'</p>\n' +
+                        '            </a>\n' +
+                        '             <button sec:authorize="isAuthenticated()" onclick="saveToBucket('+product.id+')"  class="soldbut"></button>\n'+
+                        '        </li>';
+                }
+
+                document.getElementById("productList").innerHTML = html;
+            }
+        };
+        xhttp.open("GET", "http://localhost:8080/products/findAll", true);
+        xhttp.send();
+    }
+
+    function infoAboutUser() {
+        var xhttp = new XMLHttpRequest();
+        xhttp.onreadystatechange = function () {
+            if (this.readyState == 4 && this.status == 200) {
+                var user = JSON.parse(this.responseText);
+                var html =
+                    '<a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>\n ' +
+                    '<p class="name">Ваше имя: <span id="username">'+user.username+'</span></p>\n' +
+                    '    <p class="acNumber">Номер счета: <span><br>'+user.accountNumber+'</span></p>\n' +
+                    '    <p class="name">Баланс: <span>'+user.account+'</span></p>\n' +
+                    '    <input class="input_send" id="accountNumberUser"  type="text" placeholder="Введите номер счета">\n' +
+                    '    <input class="input_send" id="money"  type="text" placeholder="Введите сумму, которую хотите переслать">\n' +
+                    '    <button class="button_send" onclick="sendMoney()" type="submit"> Отправить </button>';
+                document.getElementById("mySidenav").innerHTML = html;
+            }
+        };
+        xhttp.open("GET", "http://localhost:8080/inset", true);
+        xhttp.send();
+    }
+
+    function saveToBucket(id) {
+        var xhttp = new XMLHttpRequest();
+        xhttp.open("GET", "http://localhost:8080/products/product/"+id, true);
+        xhttp.send();
+    }
+
+    function sendMoney() {
+        var xhttp = new XMLHttpRequest();
+        var number = document.getElementById("accountNumberUser").value;
+        var money = document.getElementById("money").value;
+        var username = document.getElementById("usernameAuth").innerHTML;
+        xhttp.open("PUT", "http://localhost:8081/bank/send", true);
+        xhttp.setRequestHeader("Content-Type", "application/json");
+        xhttp.send(JSON.stringify({accountNumberUser: number, money: money, username:username}));
+        infoAboutUser();
+        }
+
+
+    // infoAboutUser();
+    loadProducts();
+</script>
+</body>
+</html>
