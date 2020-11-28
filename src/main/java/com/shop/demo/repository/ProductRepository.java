@@ -7,7 +7,7 @@ import org.springframework.data.repository.query.Param;
 
 import java.util.List;
 
-public interface ProductRepository extends JpaRepository<Product, Integer> {
+public interface ProductRepository extends JpaRepository<Product, Long> {
     @Query("select p from Product p where p.name like %:name%")
     List<Product> findByNameLike(@Param("name")String name);
 }

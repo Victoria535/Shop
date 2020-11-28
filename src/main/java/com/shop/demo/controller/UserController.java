@@ -5,7 +5,6 @@ import com.shop.demo.entity.User;
 import com.shop.demo.service.UserServiceConv;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -19,8 +18,4 @@ public class UserController {
         return service.findUser(user);
     }
 
-    @GetMapping("/username")
-    public String getUser(@AuthenticationPrincipal User user){
-        return user.getUsername();
-    }
 }

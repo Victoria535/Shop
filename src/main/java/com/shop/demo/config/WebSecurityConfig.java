@@ -16,41 +16,40 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 @EnableWebSecurity
 //@EnableGlobalMethodSecurity(prePostEnabled = true)
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
-	@Autowired
-	private AuthProvider authProvider;
+    @Autowired
+    private AuthProvider authProvider;
 
-	@Bean
-	PasswordEncoder passwordEncoder()
-	{
-		PasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
-		return passwordEncoder;
-	}
+    @Bean
+    PasswordEncoder passwordEncoder() {
+        PasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+        return passwordEncoder;
+    }
 
-	@Override
-	protected void configure(HttpSecurity http) throws Exception {
-		http
-				.csrf().disable()
-			.authorizeRequests()
-				//Access is allowed to all users
-					.mvcMatchers("/**","/login**", "/registration").permitAll()
-				//All other pages require authentication
-					.anyRequest().authenticated()
-				.and()
-					.formLogin()
-					.loginPage("/login")
-				//Redirecting to the main page after successful login
-					.defaultSuccessUrl("/")
-					.permitAll()
-				.and()
-					.logout()
-					.logoutSuccessUrl("/")
-					.permitAll();
+    @Override
+    protected void configure(HttpSecurity http) throws Exception {
+        http.httpBasic().and()
+                .csrf().disable()
+                .authorizeRequests()
+                      //Access is allowed to all users
+                    .mvcMatchers("/**", "/login**", "/registration").permitAll()
+                    //All other pages require authentication
+                    .anyRequest().authenticated()
+                .and()
+                    .formLogin()
+                    .loginPage("/login")
+                    //Redirecting to the main page after successful login
+                    .defaultSuccessUrl("/")
+                    .permitAll()
+                .and()
+                    .logout()
+                    .logoutSuccessUrl("/")
+                    .permitAll();
 
-	}
 
-	@Override
-	protected void configure(AuthenticationManagerBuilder auth)
-	{
-		auth.authenticationProvider(authProvider);
-	}
+    }
+
+    @Override
+    protected void configure(AuthenticationManagerBuilder auth) {
+        auth.authenticationProvider(authProvider);
+    }
 }

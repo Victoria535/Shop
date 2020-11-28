@@ -692,9 +692,28 @@
 
     function saveToBucket(id) {
         var xhttp = new XMLHttpRequest();
+
+        xhttp.onreadystatechange = function () {
+            if (this.readyState == 4 && this.status == 200) {
+                var product = JSON.parse(this.responseText);
+                var name = product.name;
+                var cost = product.cost;
+                var description = product.description;
+                var path = product.path;
+                createBucket(id, name, cost, description, path);
+            }
+        };
+
         xhttp.open("GET", "http://localhost:8080/product/"+id, true);
         xhttp.send();
     }
+
+        function createBucket(id, name, cost, description, path) {
+            var xmlhttp = new XMLHttpRequest();
+            xmlhttp.open("POST", "http://localhost:8080/createBucket");
+            xmlhttp.setRequestHeader("Content-Type", "application/json");
+            xmlhttp.send(JSON.stringify({id: id, name: name, cost: cost, description: description, path: path}));
+        }
 
     function sendMoney() {
         var xhttp = new XMLHttpRequest();

@@ -6,6 +6,6 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.List;
 
-public interface BucketRepository extends JpaRepository<Bucket, Integer> {
+public interface BucketRepository extends JpaRepository<Bucket, Long> {
     List<Bucket> findByUser(User user);
 }

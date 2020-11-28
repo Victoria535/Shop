@@ -12,11 +12,12 @@ import javax.persistence.*;
 public class Bucket {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private Integer id;
+    private Long id;
     private String name;
     private String cost;
     private String description;
     private String path;
+    private Integer count;
 
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "user_id")
