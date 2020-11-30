@@ -539,10 +539,10 @@
                 </div>
             </li>
 
-            <li class="poket">
+            <li id="pocket" class="poket">
                 <div class="shopping-cart">
                     <a href="#"> Корзина </a>
-                <div class="shopping-cart__tooltip tooltip tooltip_pos_top">
+                <div class="shopping-cart__tooltip1 tooltip tooltip_pos_top">
                     <dl class="shopping-cart__item tooltip-item tooltip-item_side_left">
                         <dd class="tooltip-item__content">
                             <img src="sugar.jpg" class="img_bucket" alt="">
@@ -621,23 +621,67 @@
                 for (var i = 0; i < products.length; i++) {
                     var product = products[i];
                     console.log(product);
-                    html = html +'  <li class="product-wrapper">\n' +
-                        '            <a href="" class="product">\n' +
-                        '                <div class="product-photo">\n' +
-                        '                    <img src="'+product.path+'" alt="">\n' +
-                        '                </div>\n' +
-                        '                <p class="title" >'+product.name +'</p>\n' +
-                        '                <p class="desc">'+product.description+'</p>\n' +
-                        '                <p class="price">'+product.cost+'</p>\n' +
-                        '            </a>\n' +
-                        '             <button sec:authorize="isAuthenticated()" onclick="saveToBucket('+product.id+')"  class="soldbut"></button>\n'+
-                        '        </li>';
+                    html = html +'';
                 }
 
                 document.getElementById("productList").innerHTML = html;
             }
         };
         xhttp.open("GET", "http://localhost:8080/products/search?name=" + name, true);
+        xhttp.send();
+    }
+
+    function showBucket() {
+        var xhttp = new XMLHttpRequest();
+        xhttp.onreadystatechange = function () {
+            if (this.readyState == 4 && this.status == 200) {
+                var products = JSON.parse(this.responseText);
+                var html= '';
+                for (var i = 0; i < products.length; i++) {
+                    var bucket = products[i];
+                    console.log(bucket);
+                    html = html + ' <div class="shopping-cart">\n' +
+                        '                    <a href="#"> Корзина </a>\n' +
+                        '                <div class="shopping-cart__tooltip tooltip tooltip_pos_top">\n' +
+                        '                    <dl class="shopping-cart__item tooltip-item tooltip-item_side_left">\n' +
+                        '                        <dd class="tooltip-item__content">\n' +
+                        '                            <img src="'+bucket.path+'" class="img_bucket" alt="">\n' +
+                        '                        </dd>\n' +
+                        '                        </dd>\n' +
+                        '                    </dl>\n' +
+                        '\n' +
+                        '                    <dl class="shopping-cart__item tooltip-item tooltip-item_side_center">\n' +
+                        '                        <dd class="tooltip-item__content">\n' +
+                        '                            <div class="desc_buck">\n' +
+                        '                            <span> '+bucket.name +'</span>\n' +
+                        '                                <br>\n' +
+                        '                                <span>'+bucket.count +'</span>\n' +
+                        '                            </div>\n' +
+                        '                        </dd>\n' +
+                        '                    </dl>\n' +
+                        '\n' +
+                        '\n' +
+                        '                    <dl class="shopping-cart__item tooltip-item tooltip-item_side_right">\n' +
+                        '                        <dd class="tooltip-item__content">\n' +
+                        '                            <span class="emphasis">'+bucket.cost +'</span>\n' +
+                        '                        </dd>\n' +
+                        '                    </dl>\n' +
+                        '                    <ul class="shopping-cart__actions actions-list">\n' +
+                        '                        <li class="actions-list__item actions-list__item_side_left">\n' +
+                        '                            <p class="more">Итого: 220000</p>\n' +
+                        '                        </li>\n' +
+                        '                        <li class="actions-list__item actions-list__item_side_right">\n' +
+                        '                            <a href="#" class="button __button">Купить</a>\n' +
+                        '                        </li>\n' +
+                        '                    </ul>\n' +
+                        '                </div>\n' +
+                        '                </div>';
+                }
+
+                document.getElementById("pocket").innerHTML = html;
+            }
+        };
+        xhttp.open("GET", "http://localhost:8080/bucket/findAll", true);
         xhttp.send();
     }
 
@@ -729,6 +773,7 @@
 
     // infoAboutUser();
     loadProducts();
+        showBucket();
 </script>
 </body>
 </html>

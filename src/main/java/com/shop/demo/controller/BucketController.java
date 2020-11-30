@@ -1,25 +1,31 @@
 package com.shop.demo.controller;
 
 import com.shop.demo.dto.ProductDTO;
+import com.shop.demo.dto.UserDTO;
 import com.shop.demo.entity.Bucket;
 import com.shop.demo.entity.User;
 import com.shop.demo.repository.BucketRepository;
 import com.shop.demo.repository.ProductRepository;
 import com.shop.demo.service.ProductService;
+import com.shop.demo.service.UserServiceConv;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
+
+import java.util.List;
+import java.util.stream.Collectors;
 
 @RestController
 public class BucketController {
 
     @Autowired
-    private ProductRepository productRepository;
+    private UserServiceConv userService;
     @Autowired
     private BucketRepository bucketRepository;
     @Autowired
@@ -34,7 +40,9 @@ public class BucketController {
     //    @PreAuthorize("hasAuthority('USER')")
     @PostMapping("/createBucket")
     public Object createBucket(@RequestBody ProductDTO productDTO, @AuthenticationPrincipal User user) {
-        if (user != null) {
+        Bucket oldBucket = bucketRepository.findByName(productDTO.getName());
+
+        if (user != null && oldBucket==null) {
             Bucket bucket = new Bucket();
             bucket.setName(productDTO.getName());
             bucket.setCost(productDTO.getCost());
@@ -43,8 +51,32 @@ public class BucketController {
             bucket.setPath(productDTO.getPath());
             bucket.setUser(user);
             return bucketRepository.save(bucket);
+        } else if(user!=null && oldBucket!=null){
+            Integer count = oldBucket.getCount();
+            oldBucket.setCount(count+1);
+            return bucketRepository.save(oldBucket);
         } else {
             return HttpStatus.NON_AUTHORITATIVE_INFORMATION;
         }
     }
+
+    @PutMapping("/buyProducts")
+    public UserDTO buyProducts(@AuthenticationPrincipal User user){
+        List<Bucket> bucketList = bucketRepository.findByUser(user);
+        Integer sum = bucketList.stream().mapToInt(count-> Integer.parseInt(count.getCost())*count.getCount()).sum();
+        Integer before = user.getAccount();
+        user.setAccount(before-sum);
+        for (Bucket bucket : bucketList){
+            bucketRepository.delete(bucket);
+        }
+        return userService.saveUser(user);
+    }
+
+    @GetMapping("/bucket/findAll")
+    public List<Bucket> findBucket(@AuthenticationPrincipal User user){
+        return bucketRepository.findByUser(user);
+    }
+
+
+
 }

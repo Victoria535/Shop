@@ -6,4 +6,5 @@ import com.shop.demo.entity.User;
 
 public interface UserServiceConv {
     UserDTO findUser(User user);
+    UserDTO saveUser(User user);
 }

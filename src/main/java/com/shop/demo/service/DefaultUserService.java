@@ -19,4 +19,11 @@ public class DefaultUserService implements UserServiceConv{
     public UserDTO findUser(User user) {
         return userConverter.fromUserToUserDTO(userRepository.getOne(user.getId()));
     }
+
+    @Override
+    public UserDTO saveUser(User user) {
+        return userConverter.fromUserToUserDTO(userRepository.save(user));
+    }
+
+
 }
