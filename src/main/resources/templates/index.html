@@ -539,44 +539,9 @@
                 </div>
             </li>
 
-            <li id="pocket" class="poket">
-                <div class="shopping-cart">
-                    <a href="#"> Корзина </a>
-                <div class="shopping-cart__tooltip1 tooltip tooltip_pos_top">
-                    <dl class="shopping-cart__item tooltip-item tooltip-item_side_left">
-                        <dd class="tooltip-item__content">
-                            <img src="sugar.jpg" class="img_bucket" alt="">
-                        </dd>
-                        </dd>
-                    </dl>
-
-                    <dl class="shopping-cart__item tooltip-item tooltip-item_side_center">
-                        <dd class="tooltip-item__content">
-                            <div class="desc_buck">
-                            <span> Сахар "Слуцкий"</span>
-                                <br>
-                                <span>1 шт.</span>
-                            </div>
-                        </dd>
-                    </dl>
-
-
-                    <dl class="shopping-cart__item tooltip-item tooltip-item_side_right">
-                        <dd class="tooltip-item__content">
-                            <span class="emphasis">4.0р</span>
-                        </dd>
-                    </dl>
-                    <ul class="shopping-cart__actions actions-list">
-                        <li class="actions-list__item actions-list__item_side_left">
-                            <p class="more">Итого: 220000</p>
-                        </li>
-                        <li class="actions-list__item actions-list__item_side_right">
-                            <a href="#" class="button __button">Купить</a>
-                        </li>
-                    </ul>
-                </div>
-                </div>
-      </li>
+            <li>
+                    <a href="bucket.html"> Корзина </a>
+            </li>
 
             <li sec:authorize="!isAuthenticated()"> <a href="/login">Войти</a></li>
             <li sec:authorize="isAuthenticated()"> <a th:href="@{/logout}">Выйти</a></li>
