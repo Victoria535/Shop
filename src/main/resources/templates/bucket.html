@@ -2,8 +2,10 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Корзина</title>
     <style>
+        @import url(https://fonts.googleapis.com/css?family=Roboto:300,400,500);
         * {
             box-sizing: border-box;
         }
@@ -16,17 +18,67 @@
             background-color: #7EC855;
             font-family: 'Roboto', sans-serif;
         }
+
+        /*menu*/
+
+        #header {
+            height: 50px;
+        }
+
+        .navigation {
+            width: 110%;
+            height: 50px;
+            font-size: 16px;
+            line-height: 50px;
+            position: fixed;
+            top: 0;
+            left: -10px;
+            z-index: 1000;
+            background: black;
+            color: #FFF;
+            border-bottom: solid 1px #333;
+            transition: background-color 0.2s linear;
+        }
+
+        .navigation ul {
+            width: 100%;
+            padding-left: 0;
+            margin: 0 auto;
+            display: block;
+        }
+
+        #menu li {
+            float: left;
+            list-style: none;
+            padding: 0 25px;
+        }
+
+        #menu a {
+            color: #fff;
+            font-size: 19px;
+            text-decoration: none;
+            font-family: MS Serif;
+        }
+
+        #menu>li a:hover {
+            color: red;
+            transition: color 0.5s ease;
+        }
+        /*menu*/
+
+
+
         .shopping-cart {
             width: 750px;
-            height: 423px;
+            /*height: 100%;*/
             margin: 80px auto;
             background: #FFFFFF;
             box-shadow: 1px 2px 3px 0px rgba(0,0,0,0.10);
             border-radius: 6px;
-
             display: flex;
             flex-direction: column;
         }
+
         .title {
             height: 60px;
             border-bottom: 1px solid #E1E8EE;
@@ -51,34 +103,17 @@
             padding-top: 30px;
             margin-right: 60px;
         }
-        .delete-btn,
-        .like-btn {
-            display: inline-block;
-            Cursor: pointer;
-        }
+
         .delete-btn {
-            width: 18px;
-            height: 17px;
+            display: inline-block;
+            cursor: pointer;
+            width: 40px;
+            height: 40px;
             background: url("delete-icn.svg") no-repeat center;
+            margin-right: 0px;
         }
 
-        .like-btn {
-            position: absolute;
-            top: 9px;
-            left: 15px;
-            background: url('twitter-heart.png');
-            width: 60px;
-            height: 60px;
-            background-size: 2900%;
-            background-repeat: no-repeat;
-        }
-        .is-active {
-            animation-name: animate;
-            animation-duration: .8s;
-            animation-iteration-count: 1;
-            animation-timing-function: steps(28);
-            animation-fill-mode: forwards;
-        }
+
 
         @keyframes animate {
             0%   { background-position: left;  }
@@ -89,11 +124,10 @@
             margin-right: 50px;
         }
 
-        Let’s add some basic style to  product name and description.
         .description {
             padding-top: 10px;
             margin-right: 60px;
-            width: 115px;
+            width: 140px;
         }
 
         .description span {
@@ -180,6 +214,33 @@
     </style>
 </head>
 <body>
+<div id="header">
+    <div class="navigation">
+        <ul id="menu">
+            <li><img class="icon" src="icon.jpg" onclick="openNav()" alt=""></li>
+            <li><a href="">Каши</a></li>
+            <li><a href="">Что-то</a></li>
+            <li><a href="">Сладкое</a></li>
+<!--            <li>-->
+<!--                <div class="searh">-->
+<!--                    <input id="search_field" class="input_search" type="text" placeholder="Искать здесь...">-->
+<!--                    <button onclick="searchByName()" type="submit" class="searchbut"></button>-->
+<!--                </div>-->
+<!--            </li>-->
+
+            <li>
+                <a href="bucket.html"> Корзина </a>
+            </li>
+
+<!--            <li sec:authorize="!isAuthenticated()"> <a href="/login">Войти</a></li>-->
+<!--            <li sec:authorize="isAuthenticated()"> <a th:href="@{/logout}">Выйти</a></li>-->
+        </ul>
+    </div>
+</div>
+
+
+
+
 <div class="shopping-cart">
     <!-- Title -->
     <div class="title">
@@ -194,7 +255,100 @@
         </div>
 
         <div class="image">
-            <img src="item-1.png" alt="" />
+            <img src="mykalida.jpg" alt="" />
+        </div>
+
+        <div class="description">
+            <span>Common Projects</span>
+            <span>Bball High</span>
+            <span>White</span>
+        </div>
+
+        <div class="quantity">
+            <button class="plus-btn" type="button" name="button">
+                <img src="plus.svg" alt="" />
+            </button>
+            <input type="text" name="name" value="1">
+            <button class="minus-btn" type="button" name="button">
+                <img src="minus.svg" alt="" />
+            </button>
+        </div>
+
+        <div class="total-price">$549</div>
+    </div>
+
+
+    <!-- Товар #1 -->
+    <div class="item">
+        <div class="buttons">
+            <span class="delete-btn"></span>
+            <span class="like-btn"></span>
+        </div>
+
+        <div class="image">
+            <img src="mykalida.jpg" alt="" />
+        </div>
+
+        <div class="description">
+            <span>Common Projects</span>
+            <span>Bball High</span>
+            <span>White</span>
+        </div>
+
+        <div class="quantity">
+            <button class="plus-btn" type="button" name="button">
+                <img src="plus.svg" alt="" />
+            </button>
+            <input type="text" name="name" value="1">
+            <button class="minus-btn" type="button" name="button">
+                <img src="minus.svg" alt="" />
+            </button>
+        </div>
+
+        <div class="total-price">$549</div>
+    </div>
+
+
+    <!-- Товар #1 -->
+    <div class="item">
+        <div class="buttons">
+            <span class="delete-btn"></span>
+            <span class="like-btn"></span>
+        </div>
+
+        <div class="image">
+            <img src="mykalida.jpg" alt="" />
+        </div>
+
+        <div class="description">
+            <span>Common Projects</span>
+            <span>Bball High</span>
+            <span>White</span>
+        </div>
+
+        <div class="quantity">
+            <button class="plus-btn" type="button" name="button">
+                <img src="plus.svg" alt="" />
+            </button>
+            <input type="text" name="name" value="1">
+            <button class="minus-btn" type="button" name="button">
+                <img src="minus.svg" alt="" />
+            </button>
+        </div>
+
+        <div class="total-price">$549</div>
+    </div>
+
+
+    <!-- Товар #1 -->
+    <div class="item">
+        <div class="buttons">
+            <span class="delete-btn"></span>
+            <span class="like-btn"></span>
+        </div>
+
+        <div class="image">
+            <img src="mykalida.jpg" alt="" />
         </div>
 
         <div class="description">
@@ -224,7 +378,7 @@
         </div>
 
         <div class="image">
-            <img src="item-2.png" alt=""/>
+            <img src="barilla.jpg" alt=""/>
         </div>
 
         <div class="description">
@@ -254,7 +408,7 @@
         </div>
 
         <div class="image">
-            <img src="item-3.png" alt="" />
+            <img src="salt.jpg" alt="" />
         </div>
 
         <div class="description">
