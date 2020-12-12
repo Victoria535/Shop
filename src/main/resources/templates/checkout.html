@@ -1,310 +1,290 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="https://www.thymeleaf.org" xmlns:sec="http://www.w3.org/1999/xhtml">
 <head>
-	<title>Оплата </title>
-	<meta charset="utf-8">
+    <title>Оплата </title>
+    <meta charset="utf-8">
 
-	<link rel="stylesheet" type="text/css" href="font-awesome.min.css">
-	<link rel="stylesheet" type="text/css" href="bootstrap.css">
-	<link rel="stylesheet" type="text/css" href="style.css">
-	<link rel="stylesheet" type="text/css" href="jquery.bxslider.css">
-	<link rel="stylesheet" type="text/css" href="colorbox.css">
-	<link href="fonts.css" rel="stylesheet" type="text/css">
+    <link rel="stylesheet" type="text/css" href="font-awesome.min.css">
+    <link rel="stylesheet" type="text/css" href="bootstrap.css">
+    <link rel="stylesheet" type="text/css" href="style.css">
+    <link rel="stylesheet" type="text/css" href="jquery.bxslider.css">
+    <link rel="stylesheet" type="text/css" href="colorbox.css">
+    <link href="fonts.css" rel="stylesheet" type="text/css">
 </head>
 <body>
 
 <div class="wrap">
-	<!-- top panel -->
-	<div class="navbar navbar-inverse navbar-fixed-top topbar">
-		<div class="container">
+    <!-- top panel -->
+    <div class="navbar navbar-inverse navbar-fixed-top topbar">
+        <div class="container">
 
-			<!-- cart -->
-			<div id="cart">
-				<div class="heading">
-					<a href="/shopping-cart" title="Корзина">
+            <!-- cart -->
+            <div id="cart">
+                <div class="heading">
+                    <a href="/shopping-cart" title="Корзина">
                            <span id="cart-total">
                                <i class="fa fa-shopping-cart fa-lg"></i>&nbsp;
                                <span id="countAndSum" class="hidden-xs"> </span>
                            </span>
-					</a>
-				</div>
-			</div>
-			<div class="divider"></div>
-			<!-- menu -->
-			<div id="menu" class="menu-container">
+                    </a>
+                </div>
+            </div>
+            <div class="divider"></div>
+            <!-- menu -->
+            <div id="menu" class="menu-container">
 
-				<div class="collapse menu-collapse" id="menu-mobile">
-					<ul class="nav nav-pills">
-						<li><a href="">Завтраки</a></li>
+                <div class="collapse menu-collapse" id="menu-mobile">
+                    <ul class="nav nav-pills">
+                        <li><a href="">Завтраки</a></li>
 
-						<li><a href="">Обеды</a></li>
-						<li><a href="">Ужины</a></li>
-						<li><a href="">Десерты</a></li>
+                        <li><a href="">Обеды</a></li>
+                        <li><a href="">Ужины</a></li>
+                        <li><a href="">Десерты</a></li>
 
-					</ul>
-				</div>
-			</div>
-			<div class="divider hidden-sm hidden-xs"></div>
+                    </ul>
+                </div>
+            </div>
+            <div class="divider hidden-sm hidden-xs"></div>
 
-		</div>
-	</div>
-	<!-- //top panel -->
+        </div>
+    </div>
+    <!-- //top panel -->
 
-	<!-- header -->
-	<div class="header">
-		<div class="container">
+    <!-- header -->
+    <div class="header">
+        <div class="container">
 
-			<div class="row">
-				<div class="col-sm-4">
-					<div class="social hidden-xs">
-						<a title="Instagram">
-							<span class="fa fa-instagram"></span>
-						</a>
-						<a title="Twitter">
-							<span class="fa fa-twitter"></span>
-						</a>
-						<a title="Vkontakte">
-							<span class="fa fa-vk"></span>
-						</a>
-						<a title="YouTube">
-							<span class="fa fa-youtube"></span>
-						</a>
-					</div>
+            <div class="row">
+                <div class="col-sm-4">
+                    <div class="social hidden-xs">
+                        <a title="Instagram">
+                            <span class="fa fa-instagram"></span>
+                        </a>
+                        <a title="Twitter">
+                            <span class="fa fa-twitter"></span>
+                        </a>
+                        <a title="Vkontakte">
+                            <span class="fa fa-vk"></span>
+                        </a>
+                        <a title="YouTube">
+                            <span class="fa fa-youtube"></span>
+                        </a>
+                    </div>
 
-					<div class="header-left">
-						<div id="address">
-							<p><strong>График работы:</strong></p>
-							<p>пн-пт <strong>10:00 - 18:00</strong>, сб-вс <strong>9:00 - 19:00</strong></p>
-						</div>
-						<div id="phone"><span>(29)</span> 234-34-34</div>
-					</div>
-				</div>
+                    <div class="header-left">
+                        <div id="address">
+                            <p><strong>График работы:</strong></p>
+                            <p>пн-пт <strong>10:00 - 18:00</strong>, сб-вс <strong>9:00 - 19:00</strong></p>
+                        </div>
+                        <div id="phone"><span>(29)</span> 234-34-34</div>
+                    </div>
+                </div>
 
-				<div class="col-sm-4">
-					<div id="logo">
-						<a href="/"><img src="shop.jpg" width="150" height="150"></a>
-					</div>
-				</div>
+                <div class="col-sm-4">
+                    <div id="logo">
+                        <a href="/"><img src="shop.jpg" width="150" height="150"></a>
+                    </div>
+                </div>
 
-				<div class="col-sm-4">
-					<div id="search">
-						<div class="input-group">
-							<input type="text" id="search_field" class="form-control" placeholder="Search" value="">
-							<span class="input-group-btn">
-                                    <button onclick="searchByName()" class="btn btn-default button-search" type="submit">
+                <div class="col-sm-4">
+                    <div id="search">
+                        <div class="input-group">
+                            <input type="text" id="search_field" class="form-control" placeholder="Search" value="">
+                            <span class="input-group-btn">
+                                    <button onclick="searchByName()" class="btn btn-default button-search"
+                                            type="submit">
                                         <span class="fa fa-search"></span>
                                     </button>
                                 </span>
-						</div>
-					</div>
+                        </div>
+                    </div>
 
-					<div class="header-right">
-						<div sec:authorize="!isAuthenticated()" id="welcome">
-							Добро пожаловать, покупатель, ты можешь <a href="/login">войти</a> или <a href="/registration">зарегистрироваться</a>.
-						</div>
-						<div sec:authorize="isAuthenticated()" id="poka">
-							Вы уже авторизированы. Нажмите <a th:href="@{/logout}">Выйти</a>, чтобы зайти с другого аккаунта.
-						</div>
+                    <div class="header-right">
+                        <div sec:authorize="!isAuthenticated()" id="welcome">
+                            Добро пожаловать, покупатель, ты можешь <a href="/login">войти</a> или <a
+                                href="/registration">зарегистрироваться</a>.
+                        </div>
+                        <div sec:authorize="isAuthenticated()" id="poka">
+                            Вы уже авторизированы. Нажмите <a th:href="@{/logout}">Выйти</a>, чтобы зайти с другого
+                            аккаунта.
+                        </div>
 
-						<div class="links">
-							<a sec:authorize="isAuthenticated()" id="link-cart" href="/shopping-cart">
-								<i class="fa fa-shopping-cart"></i> Корзина
-							</a><br>
-						</div>
-					</div>
-				</div>
-			</div>
-		</div>
-	</div>
-	<!-- //header -->
-
-
-		<div id="container" class="content">
-			<div class="container">
-				<div id="notification"></div>
-
-				<div id="content">
-	
-					<ol class="breadcrumb">
-						<li><a href="">Главная</a></li>
-						<li><a href="/shopping-cart">Корзина</a></li>
-						<li><a href="/checkout">Оплата</a></li>
-					</ol>
-
-					<div class="page-header">
-						<h1>Оплата</h1>
-					</div>
-
-						<div id="payment-address" class="panel panel-default">
-							<div class="checkout-heading panel-heading"><span>Шаг 1: Адрес доставки</span></div>
-							<div class="checkout-content panel-body" style="display: none">
-								<div class="form-group">
-									<div class="radio">
-										<label for="adress">
-											Введите свой адрес
-										</label>
-										<input type="text" name="shipping_method" value="adress" id="adress">
-
-									</div>
-
-									<div id="payment-existing" style="display: block;">
-										<select name="address_id" size="5" class="form-control">
-											<option value="4"></option>
-										</select>
-									</div>
-								</div>
+                        <div class="links">
+                            <a sec:authorize="isAuthenticated()" id="link-cart" href="/shopping-cart">
+                                <i class="fa fa-shopping-cart"></i> Корзина
+                            </a><br>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- //header -->
 
 
-							</div>
-						</div>
+    <div id="container" class="content">
+        <div class="container">
 
-						<div id="shipping-method" class="panel panel-default">
-							<div class="checkout-heading panel-heading">Шаг 2: Способ доставки</div>
-							<div class="checkout-content panel-body" style="display: none">
-								<h4>Выберите способ доставки</h4>
+            <div id="content">
 
-								<div class="form-group">
-									<label for="flat.flat">
-										<input type="radio" name="shipping_method" value="flat.flat" id="flat.flat" checked="checked">
-										Доставка курьером <strong> бесплатно </strong>
-									</label>
-								</div>
-							</div>
-						</div>
+                <ol class="breadcrumb">
+                    <li><a href="">Главная</a></li>
+                    <li><a href="/shopping-cart">Корзина</a></li>
+                    <li><a href="/checkout">Оплата</a></li>
+                </ol>
 
-						<div id="payment-method" class="panel panel-default">
-							<div class="checkout-heading panel-heading">Step 5: Payment Method</div>
-							<div class="checkout-content panel-body" style="display: none">
-								<h4>Please select the preferred payment method to use on this order.</h4>
-								<div class="form-group">
-									<label for="cod">
-										<input type="radio" name="payment_method" value="cod" id="cod" checked="checked">
-										Cash On Delivery            
-									</label>
-								</div>
-						
-								<div class="form-group">
-									<label>Add Comments About Your Order</label>
-									<textarea name="comment" class="form-control" rows="4"></textarea>
-								</div>
+                <div class="page-header">
+                    <h1>Оплата</h1>
+                </div>
 
-								<div class="buttons">
-									<input type="button" value="Continue" id="button-payment-method" class="btn btn-warning">
-									<div class="checkbox-inline">
-										<label>
-											<input type="checkbox" name="agree" value="1">
-											I have read and agree to the <a class="colorbox" href="http://chef.erpshop.ru/index.php?route=information/information/info&amp;information_id=5" alt="Terms &amp; Conditions"><b>Terms &amp; Conditions</b></a>        
-										</label>
-									</div>
-								</div>
-					
-							</div>
-						</div>
-						<div id="confirm" class="panel panel-default">
-							<div class="checkout-heading panel-heading">Step 6: Confirm Order</div>
-							<div class="checkout-content panel-body" style="display: none">
-								<div class="checkout-product table-responsive">
-									<table class="table table-bordered table-hover">
-										<thead>
-										<tr>
-											<th class="model"></th>
-											<th class="image">Фото</th>
-											<th class="name">Название</th>
-											<th class="quantity">Количество</th>
-											<th class="price">Цена</th>
-										</tr>
-										</thead>
+                <div class="checkout panel-group">
 
-										<tbody id="bucket">
+                    <div id="payment-address" class="panel panel-default">
+                        <div class="form-group">
+                            <div class="radio">
+                                <label>
+                                    Введите ваше имя:
+                                </label>
+                            </div>
 
-										</tbody>
+                            <div>
+                                <select name="address_id" size="5" class="form-control">
+                                    <option value="4">name</option>
+                                </select>
+                            </div>
+                        </div>
 
-										<tfoot>
-											<tr>
-												<td colspan="4" class="price text-right">
-													<b>Итого:</b>
-												</td>
-												<td class="total">$15.42</td>
-											</tr>
-										</tfoot>
-									</table>
-								</div>
-								<br>
-								<div class="payment">
-									<div class="buttons">
-										<input type="button" value="Confirm Order" id="button-confirm" class="btn btn-warning">
-									</div>
-								</div>
-							</div>
-						</div>
-					</div>
+                        <div class="form-group">
+                            <div class="radio">
+                                <label>
+                                    введите номер телефона
+                                </label>
+                            </div>
+                            <div>
+                                <select name="address_id" size="5" class="form-control">
+                                    <option value="4">phone</option>
+                                </select>
+                            </div>
 
-				<script type="text/javascript">
+                        </div>
+                    </div>
+                </div>
 
-					$(document).on('click', '.checkout-heading', function() {
-						$('.checkout-content').slideUp('slow');
-						$(this).parent().find('.checkout-content').slideDown('slow');
-					});
+                <div id="shipping-address" class="panel panel-default">
+                    <div class="form-group">
+                        <div class="radio">
+                            <label>
+                                введите адрес
+                            </label>
+                        </div>
 
-				</script>
+                        <div id="payment-existing" style="display: block;">
+                            <select name="address_id" size="5" class="form-control">
+                                <option value="5">Российская Федерация</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+            <div id="shipping-method" class="panel panel-default">
+                <h4>Выберите метод доставки</h4>
 
-			</div>
-		</div>
+                <div class="form-group">
+                    <label for="flat.flat">
+                        <input type="radio" name="shipping_method" value="flat.flat" id="flat.flat" checked="checked">
+                        Доставка курьером — <strong>бесплатно</strong>
+                    </label>
+                </div>
+            </div>
 
-			<!-- footer -->
-			<div id="footer" class="footer">
-				<div class="container">
-					<div class="row">
-						<div class="col-sm-3">
-							<div class="column">
-								<h4>Информация</h4>
-								<ul>
-									<li><a href="\about-us">О нас</a></li>
 
-								</ul>
-							</div>
-						</div>
-						<div class="col-sm-3 text-right">
-							<div id="powered">
-								<a>Create by Vika</a>
-								<br>
-								Shop © 2020
-							</div>
-						</div>
-					</div>
-				</div>
-			</div>
-			<!-- //footer -->
-		</div>
+        <div id="payment-method" class="panel panel-default">
+            <h4>Выберите способ оплаты</h4>
+            <div class="form-group">
+                <label for="cod">
+                    <input type="radio" name="payment_method" value="cod" id="cod" checked="checked">
+                    Наличными курьеру
+                </label>
+            </div>
+        </div>
+
+        <div id="confirm" class="panel panel-default">
+            <div class="checkout-product table-responsive">
+                <table class="table table-bordered table-hover">
+                    <tfoot>
+                    <tr>
+                        <td class="text-right">
+                            <strong>Итого:</strong>
+                        </td>
+                        <td class="total">$15.42</td>
+
+                    </tr>
+                    </tfoot>
+                </table>
+            </div>
+            <br>
+            <div class="payment">
+                <div class="buttons">
+                    <input type="button" value="Оплатить" id="button-confirm" class="btn btn-warning">
+                </div>
+            </div>
+        </div>
+    </div>
+        </div>
+    </div>
+    <!-- footer -->
+    <div id="footer" class="footer">
+        <div class="container">
+            <div class="row">
+                <div class="col-sm-3">
+                    <div class="column">
+                        <h4>Информация</h4>
+                        <ul>
+                            <li><a href="\about-us">О нас</a></li>
+
+                        </ul>
+                    </div>
+                </div>
+                <div class="col-sm-3 text-right">
+                    <div id="powered">
+                        <a>Create by Vika</a>
+                        <br>
+                        Shop © 2020
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- //footer -->
+</div>
 
 <script>
-	function getCountAndSum() {
-		if (true) {
-			var xhttp = new XMLHttpRequest();
-			xhttp.onreadystatechange = function () {
-				if (this.readyState == 4 && this.status == 200) {
-					var products = JSON.parse(this.responseText);
-					var html = '';
-					var summa = 0;
-					var countProd = 0;
-					for (var i = 0; i < products.length; i++) {
-						var bucket = products[i];
-						console.log(bucket);
-						countProd = countProd + bucket.count;
-						summa = summa + (bucket.cost * bucket.count);
-					}
+    function getCountAndSum() {
+        if (true) {
+            var xhttp = new XMLHttpRequest();
+            xhttp.onreadystatechange = function () {
+                if (this.readyState == 4 && this.status == 200) {
+                    var products = JSON.parse(this.responseText);
+                    var html = '';
+                    var summa = 0;
+                    var countProd = 0;
+                    for (var i = 0; i < products.length; i++) {
+                        var bucket = products[i];
+                        console.log(bucket);
+                        countProd = countProd + bucket.count;
+                        summa = summa + (bucket.cost * bucket.count);
+                    }
 //<a>1 товар- 533.00 $</a>
-					html = '<a>' + countProd + ' товар(ов)- ' + summa.toFixed(2) + ' р</a>'
+                    html = '<a>' + countProd + ' товар(ов)- ' + summa.toFixed(2) + ' р</a>'
 
-					document.getElementById("countAndSum").innerHTML = html;
-				}
-			};
-			xhttp.open("GET", "http://localhost:8080/bucket/findAll", true);
-			xhttp.send();
-		}
-	}
+                    document.getElementById("countAndSum").innerHTML = html;
+                }
+            };
+            xhttp.open("GET", "http://localhost:8080/bucket/findAll", true);
+            xhttp.send();
+        }
+    }
 
-	getCountAndSum();
+    getCountAndSum();
 </script>
 </body>
 </html>

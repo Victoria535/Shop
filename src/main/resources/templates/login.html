@@ -10,6 +10,10 @@
     <link rel="stylesheet" type="text/css" href="jquery.bxslider.css">
     <link rel="stylesheet" type="text/css" href="colorbox.css">
     <link href="fonts.css" rel="stylesheet" type="text/css">
+    <link rel="stylesheet" type="text/css" href="product_slider.css" media="screen">
+    <link rel="stylesheet" type="text/css" href="product_tabs.css" media="screen">
+    <script type="text/javascript" src="js/jquery.min.js"></script>
+    <script type="text/javascript" src="js/jquery.cycle.js"></script>
 </head>
 
 <body>
@@ -142,7 +146,9 @@
     <form th:action="@{/login}" method="POST" name="signupform">
         <div class="content">
             <p class="help-block"><strong>У меня есть аккаунт</strong></p>
-
+            <div class="form-group" th:if="${param.error}">
+                Invalid username and password.
+            </div>
             <div class="form-group">
                 <label for="username">Логин</label>
                 <input type="text" class="form-control"  id="username" name="username" placeholder="Введите логин..." value="" oninput="return userNameValidation(this.value)" required>
@@ -224,10 +230,14 @@
 </script>
 
 
+<script type="text/javascript" src="js/bootstrap.min.js"></script>
+<script type="text/javascript" src="js/jquery.bxslider.min.js"></script>
+<script type="text/javascript" src="js/jquery.easing.1.3.js"></script>
+<script type="text/javascript" src="js/jquery.fitvids.js"></script>
+<script type="text/javascript" src="js/jquery.colorbox.js"></script>
+<script type="text/javascript" src="js/common.js"></script>
 
-<!--        <div class="form-group" th:if="${param.error}">-->
-<!--               Invalid username and password.-->
-<!--                 </div>-->
+
 
 
 </body>

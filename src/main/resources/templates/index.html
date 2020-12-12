@@ -387,6 +387,7 @@
 
         xhttp.open("GET", "http://localhost:8080/product/"+id, true);
         xhttp.send();
+        location.reload()
     }
 
         function createBucket(id, name, cost, description, path) {
@@ -394,6 +395,7 @@
             xmlhttp.open("POST", "http://localhost:8080/createBucket");
             xmlhttp.setRequestHeader("Content-Type", "application/json");
             xmlhttp.send(JSON.stringify({id: id, name: name, cost: cost, description: description, path: path}));
+
         }
 
     function sendMoney() {
