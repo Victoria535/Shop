@@ -1,216 +1,21 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.w3.org/1999/xhtml">
-<head>
+<html dir="ltr" lang="ru"
+      xmlns:th="http://www.w3.org/1999/xhtml" xmlns:sec="http://www.w3.org/1999/xhtml"><head>
     <meta charset="UTF-8">
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
     <title>Shop</title>
-
+    <link rel="stylesheet" type="text/css" href="font-awesome.min.css">
+    <link rel="stylesheet" type="text/css" href="bootstrap.css">
+    <link rel="stylesheet" type="text/css" href="style.css">
+    <link rel="stylesheet" type="text/css" href="jquery.bxslider.css">
+    <link rel="stylesheet" type="text/css" href="colorbox.css">
+    <link href="fonts.css" rel="stylesheet" type="text/css">
+    <link rel="stylesheet" type="text/css" href="product_slider.css" media="screen">
+    <link rel="stylesheet" type="text/css" href="product_tabs.css" media="screen">
 </head>
 <style>
-    body {
-        background: white;
-    }
 
-    #header {
-        height: 50px;
-    }
-
-    .navigation {
-        width: 110%;
-        height: 50px;
-        font-size: 16px;
-        line-height: 50px;
-        position: fixed;
-        top: 0;
-        left: -10px;
-        z-index: 1000;
-        background: black;
-        color: #FFF;
-        border-bottom: solid 1px #333;
-        transition: background-color 0.2s linear;
-    }
-
-    .navigation ul {
-        width: 100%;
-        padding-left: 0;
-        margin: 0 auto;
-        display: block;
-    }
-
-    #menu li {
-        float: left;
-        list-style: none;
-        padding: 0 25px;
-    }
-
-    #menu a {
-        color: #fff;
-        font-size: 19px;
-        text-decoration: none;
-        font-family: MS Serif;
-    }
-
-    #menu>li a:hover {
-        color: red;
-        transition: color 0.5s ease;
-    }
-
-    .product-wrapper {
-        width: 100%;
-        float: left;
-        text-decoration: none;
-    }
-
-    @media only screen and (min-width: 450px) {
-        .product-wrapper {
-            width: 50%;
-        }
-    }
-
-    @media only screen and (min-width: 768px) {
-        .product-wrapper {
-            width: 33.333%;
-        }
-    }
-
-    @media only screen and (min-width: 1000px) {
-        .product-wrapper {
-            width: 25%;
-        }
-    }
-
-    .product {
-        display: block;
-        position: relative;
-        text-decoration: none;
-        border: 1px solid #474747;
-        border-radius: 3px;
-        background: #fff;
-        margin: 0 10px 0 0;
-        height: 300px;
-        left: -15px;
-    }
-    .products {
-        list-style: none;
-    }
-
-    .product-photo {
-        position: relative;
-        padding-bottom: 100%;
-        overflow: hidden;
-    }
-
-    .product-photo img {
-        position: absolute;
-        top: -100px;
-        bottom: 0;
-        left: 0;
-        right: 0;
-        max-width: 65%;
-        max-height: 65%;
-        margin: auto;
-        transition: transform .4s ease-out;
-    }
-
-    .product:hover .product-photo img {
-        transform: scale(1.1);
-    }
-
-    .title {
-        bottom: 115px;
-        text-align: center;
-        position: relative;
-        color: black;
-        text-decoration: none;
-        font-family: URW Chancery L, cursive;
-        font-weight: 500;
-    }
-
-    .desc {
-        bottom: 130px;
-        text-align: center;
-        position: relative;
-        overflow: hidden;
-        color: black;
-        font-family: URW Chancery L, cursive;
-    }
-
-    .price {
-        position: relative;
-        bottom: 140px;
-        left: 5px;
-        width: 65px;
-        height: 25px;
-        color: black;
-        font-size: 20px;
-        font-family: "Bell MT";
-        text-align: center;
-        background: #ff751d;
-        border-radius: 2px;
-    }
-
-    .soldbut{
-        position: relative;
-        bottom: 32px;
-        right: -225px;
-        width: 65px;
-        height: 25px;
-        background: url(./cart.png) no-repeat center;
-        background-color: cadetblue;
-        text-decoration: none;
-        user-select: none;
-        padding: .5em 2em;
-        outline: none;
-        border: 2px solid black;
-        border-radius: 3px;
-        transition: 0.2s;
-    }
-    .soldbut:hover {
-        background-color: #b31206;
-        transform: scale(1.1);
-
-    }
-
-    .input_search {
-        width: 250px;
-        height: 40px;
-        bottom: 9px;
-        padding-left: 15px;
-        border-radius: 42px;
-        border: 2px solid #324b4e;
-        background: #F9F0DA;
-        color: black;
-        outline: none;
-        position: relative;
-        transition: .3s linear;
-    }
-
-    .searchbut {
-        width: 40px;
-        height: 40px;
-        background: url(./search.png) no-repeat center;
-        border: none;
-        outline: none;
-        position: relative;
-        left: -50px;
-        top: 5px;
-    }
-    .searchbut:focus {
-        outline: none;
-        border: 0;
-    }
-
-    .poket {
-        margin-left: 62px;
-    }
-
-    .searh {
-        margin-left: 280px;
-    }
-
-    .icon {
-        height: 45px;
-        width: 45px;
-    }
     /* Боковое навигационное меню */
     .sidenav {
         height: 100%; /* 100% Full-height */
@@ -274,43 +79,162 @@
         display: none;
     }
 
-/*    Корзина*/
-    .img_bucket{
-        height: 45px;
-        width: 45px;
-    }
-
-    a {
-        text-decoration:none;
-    }
-    a:hover {
-        text-decoration:underline;
-    }
-
 </style>
 
 <body>
 
-<div id="header">
-    <div class="navigation">
-        <ul id="menu">
-            <li><img class="icon" src="icon.jpg" onclick="openNav()" alt=""></li>
-            <li><a href="">Каши</a></li>
-            <li><a href="">Что-то</a></li>
-            <li><a href="">Сладкое</a></li>
-            <li>
-                <div class="searh">
-                    <input id="search_field" class="input_search" type="text" placeholder="Искать здесь...">
-                    <button onclick="searchByName()" type="submit" class="searchbut"></button>
+<div class="wrap">
+    <!-- top panel -->
+    <div class="navbar navbar-inverse navbar-fixed-top topbar">
+        <div class="container">
+
+            <!-- cart -->
+            <div id="cart">
+                <div class="heading">
+                    <a title="Корзина">
+                           <span id="cart-total">
+                               <i class="fa fa-shopping-cart fa-lg"></i>&nbsp;
+                               <span class="hidden-xs"> 0 товаров - 0.00р</span>
+                           </span>
+                    </a>
                 </div>
-            </li>
 
-            <li>
-                    <a href="bucket.html"> Корзина </a>
-            </li>
+                <div class="content">
+                    <div class="inner">
+                        <div class="empty">Ваша корзина пуста!</div>
+                    </div>
+                </div>
+            </div>
 
-            <li sec:authorize="!isAuthenticated()"> <a href="/login">Войти</a></li>
-            <li sec:authorize="isAuthenticated()"> <a th:href="@{/logout}">Выйти</a></li>
+
+            <!-- menu -->
+            <div id="menu" class="menu-container">
+<!--                <button type="button" class="menu-toggle" data-toggle="collapse" data-target="#menu-mobile">-->
+<!--                    <span class="sr-only">Toggle navigation</span>-->
+<!--                    <span class="icon-bar"></span>-->
+<!--                    <span class="icon-bar"></span>-->
+<!--                    <span class="icon-bar"></span>-->
+<!--                </button>-->
+
+                <div class="collapse menu-collapse" id="menu-mobile">
+                    <ul class="nav nav-pills">
+                        <li><a href="">Овощи и фрукты<i class="fa fa-angle-down"></i></a>
+                        <div>
+                            <div class="arrow"></div>
+                            <ul>
+                                <li><a href="">Овощи</a></li>
+                                <li><a href="">Фрукты</a></li>
+                                <li><a href="">Грибы</a></li>
+                                <li><a href="">Зелень</a></li>
+                            </ul>
+                        </div>
+                        </li>
+                        <li>
+                            <a href="">Хлеб<i class="fa fa-angle-down"></i></a>
+                            <div>
+                                <div class="arrow"></div>
+                                <ul>
+                                    <li><a href="">Хлеб и сдоба</a></li>
+                                    <li><a href="">Кондитерские изделия</a></li>
+                                </ul>
+                            </div>
+                        </li>
+                        <li><a href="">Молочные продукты</a></li>
+
+                        <li><a href="">Бакалея<i class="fa fa-angle-down"></i></a></li>
+                        <li><a href="">Мясо, рыба</a></li>
+                        <li><a href="">Напитки</a></li>
+
+                    </ul>
+                </div>
+            </div>
+            <div class="divider hidden-sm hidden-xs"></div>
+
+        </div>
+    </div>
+    <!-- //top panel -->
+
+
+
+    <!-- header -->
+    <div class="header">
+        <div class="container">
+
+            <div class="row">
+                <div class="col-sm-4">
+                    <div class="social hidden-xs">
+                        <a title="Instagram">
+                            <span class="fa fa-instagram"></span>
+                        </a>
+                        <a title="Twitter">
+                            <span class="fa fa-twitter"></span>
+                        </a>
+                        <a title="Vkontakte">
+                            <span class="fa fa-vk"></span>
+                        </a>
+                        <a title="YouTube">
+                            <span class="fa fa-youtube"></span>
+                        </a>
+                    </div>
+
+                    <div class="header-left">
+                        <div id="address">
+                            <p><strong>График работы:</strong></p>
+                            <p>пн-пт <strong>10:00 - 18:00</strong>, сб-вс <strong>9:00 - 19:00</strong></p>
+                        </div>
+                        <div id="phone"><span>(29)</span> 234-34-34</div>
+                    </div>
+                </div>
+
+                <div class="col-sm-4">
+                    <div id="logo">
+                        <a href="/"><img src="shop.jpg" width="150" height="150"></a>
+                    </div>
+                </div>
+
+                <div class="col-sm-4">
+                    <div id="search">
+                        <div class="input-group">
+                            <input type="text" name="search" class="form-control" placeholder="Search" value="">
+                            <span class="input-group-btn">
+                                    <button onclick="searchByName()" class="btn btn-default button-search" type="button">
+                                        <span class="fa fa-search"></span>
+                                    </button>
+                                </span>
+                        </div>
+                    </div>
+
+                    <div class="header-right">
+                        <div id="welcome">
+                            Добро пожаловать, покупатель, ты можешь <a href="/login">войти</a> или <a href="/registration">зарегистрироваться</a>.
+                        </div>
+
+                        <div class="links">
+                            <a id="link-cart" href="/shopping-cart">
+                                <i class="fa fa-shopping-cart"></i> Корзина
+                            </a><br>
+                            <a id="link-checkout" href="checkout.html">
+                                <i class="fa fa-credit-card"></i> Оплатить
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- //header -->
+
+
+<!--            <li>-->
+<!--                <div class="searh">-->
+<!--                    <input id="search_field" class="input_search" type="text" placeholder="Искать здесь...">-->
+<!--                    <button onclick="searchByName()" type="submit" class="searchbut"></button>-->
+<!--                </div>-->
+<!--            </li>-->
+
+
+<!--            <li sec:authorize="!isAuthenticated()"> <a href="/login">Войти</a></li>-->
+<!--            <li sec:authorize="isAuthenticated()"> <a th:href="@{/logout}">Выйти</a></li>-->
         </ul>
     </div>
 </div>
@@ -320,10 +244,51 @@
 <div sec:authorize="isAuthenticated()" id="mySidenav" class="sidenav">
 
 </div>
+<div id="container" class="content">
+<div class="container">
+<div id="content">
+    <div class="box">
+
+        <ul id="product-tabs-0" class="nav nav-tabs">
+            <li class="active">
+                <a href="#product-tab-0-featured" data-toggle="tab">
+                    <span>Популярное</span>
+                </a>
+            </li>
+        </ul>
 
     <ul id="productList" class="products clearfix">
 
     </ul>
+</div>
+</div>
+</div>
+</div>
+
+<!-- footer -->
+<div id="footer" class="footer">
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-3">
+                <div class="column">
+                    <h4>Информация</h4>
+                    <ul>
+                        <li><a href="about-us.html">О нас</a></li>
+
+                    </ul>
+                </div>
+            </div>
+            <div class="col-sm-3 text-right">
+                <div id="powered">
+                    <a href="http://conceptlogic.org/">Create by Vika</a>
+                    <br>
+                    Shop © 2020
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- //footer -->
 <div>
     <ul id="userInfo" >
 
@@ -352,7 +317,31 @@
                 for (var i = 0; i < products.length; i++) {
                     var product = products[i];
                     console.log(product);
-                    html = html +'';
+                    html = html + '<div class="box-content tab-content" id="product-slideshow0">\n' +
+                        '     <div class="box-product product-grid tab-pane fade in active" id="product-tab-0-featured">\n' +
+                        '   <!-- Begin box-product div -->\n' +
+                        '            <div class="item">\n' +
+                        '                <div class="image">\n' +
+                        '                    <a href="">\n' +
+                        '                        <img src="' + product.path + '" width="240" height="240">\n' +
+                        '                    </a>\n' +
+                        '                </div>\n' +
+                        '                <div class="caption">\n' +
+                        '                    <div class="name">\n' +
+                        '                        <a href="">' + product.name + '</a>\n' +
+                        '                    </div>\n' +
+                        '                    <div class="price">\n' +
+                        '                        <div>\n' +
+                        '                            <span class="price-fixed">' + product.cost + '</span>\n' +
+                        '                        </div>\n' +
+                        '                    </div>\n' +
+                        '                    <div class="cart">\n' +
+                        '                        <button sec:authorize="isAuthenticated()" onclick="saveToBucket(' + product.id + ')" type="button" class="btn btn-success">\n' +
+                        '                            <i class="fa fa-shopping-cart"></i> <span>Добавить в корзину</span>\n' +
+                        '                        </button>\n' +
+                        '                    </div>\n' +
+                        '</div>\n' +
+                        '   </div>\n';
                 }
 
                 document.getElementById("productList").innerHTML = html;
@@ -390,19 +379,32 @@
                 for (var i = 0; i < products.length; i++) {
                     var product = products[i];
                     console.log(product);
-                    html = html +'  <li class="product-wrapper">\n' +
-                        '            <a href="" class="product">\n' +
-                        '                <div class="product-photo">\n' +
-                        '                    <img src="'+product.path+'" alt="">\n' +
+                    html = html + '<div class="box-content tab-content" id="product-slideshow0">\n' +
+                        '     <div class="box-product product-grid tab-pane fade in active" id="product-tab-0-featured">\n' +
+                        '   <!-- Begin box-product div -->\n' +
+                        '            <div class="item">\n' +
+                        '                <div class="image">\n' +
+                        '                    <a href="">\n' +
+                        '                        <img src="' + product.path + '" width="240" height="240">\n' +
+                        '                    </a>\n' +
                         '                </div>\n' +
-                        '                <p class="title" >'+product.name +'</p>\n' +
-                        '                <p class="desc">'+product.description+'</p>\n' +
-                        '                <p class="price">'+product.cost+'</p>\n' +
-                        '            </a>\n' +
-                        '             <button sec:authorize="isAuthenticated()" onclick="saveToBucket('+product.id+')"  class="soldbut"></button>\n'+
-                        '        </li>';
+                        '                <div class="caption">\n' +
+                        '                    <div class="name">\n' +
+                        '                        <a href="">' + product.name + '</a>\n' +
+                        '                    </div>\n' +
+                        '                    <div class="price">\n' +
+                        '                        <div>\n' +
+                        '                            <span class="price-fixed">' + product.cost + '</span>\n' +
+                        '                        </div>\n' +
+                        '                    </div>\n' +
+                        '                    <div class="cart">\n' +
+                        '                        <button sec:authorize="isAuthenticated()" onclick="saveToBucket(' + product.id + ')" type="button" class="btn btn-success">\n' +
+                        '                            <i class="fa fa-shopping-cart"></i> <span>Добавить в корзину</span>\n' +
+                        '                        </button>\n' +
+                        '                    </div>\n' +
+                        '</div>\n' +
+                    '   </div>\n';
                 }
-
                 document.getElementById("productList").innerHTML = html;
             }
         };
