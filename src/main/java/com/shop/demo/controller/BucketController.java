@@ -10,7 +10,9 @@ import com.shop.demo.service.ProductService;
 import com.shop.demo.service.UserServiceConv;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -63,12 +65,13 @@ public class BucketController {
     @PutMapping("/buyProducts")
     public UserDTO buyProducts(@AuthenticationPrincipal User user){
         List<Bucket> bucketList = bucketRepository.findByUser(user);
-        Integer sum = bucketList.stream().mapToInt(count-> Integer.parseInt(count.getCost())*count.getCount()).sum();
+        Integer sum = bucketList.stream().mapToInt(count-> count.getCost()*count.getCount()).sum();
         Integer before = user.getAccount();
         user.setAccount(before-sum);
-        for (Bucket bucket : bucketList){
+        /*for (Bucket bucket : bucketList){
             bucketRepository.delete(bucket);
-        }
+        }*/
+        bucketList.forEach(bucket -> bucketRepository.delete(bucket));
         return userService.saveUser(user);
     }
 
@@ -77,6 +80,29 @@ public class BucketController {
         return bucketRepository.findByUser(user);
     }
 
+    @DeleteMapping("/delete/{id}")
+    public ResponseEntity<Void> deleteProductFromBucket(@PathVariable Long id, @AuthenticationPrincipal User user) {
+        Bucket bucket = bucketRepository.findByUserAndId(user,id);
+        bucketRepository.delete(bucket);
+        return ResponseEntity.ok().build();
+    }
 
+    @PutMapping("/increment/{id}")
+    public Bucket increment(@PathVariable Long id, @AuthenticationPrincipal User user){
+        Bucket bucket = bucketRepository.findByUserAndId(user,id);
+        Integer countBefore = bucket.getCount();
+        bucket.setCount(countBefore+1);
+        return bucketRepository.save(bucket);
+    }
+
+    @PutMapping("/decrement/{id}")
+    public Bucket decrement(@PathVariable Long id, @AuthenticationPrincipal User user){
+        Bucket bucket = bucketRepository.findByUserAndId(user,id);
+        Integer countBefore = bucket.getCount();
+        if (countBefore>1) {
+            bucket.setCount(countBefore - 1);
+        }
+        return bucketRepository.save(bucket);
+    }
 
 }

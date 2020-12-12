@@ -92,7 +92,7 @@
                     <a href="/shopping-cart" title="Корзина">
                            <span id="cart-total">
                                <i class="fa fa-shopping-cart fa-lg"></i>&nbsp;
-                               <span class="hidden-xs"> 0 товаров - 0.00р</span>
+                               <span id="countAndSum" class="hidden-xs"> </span>
                            </span>
                     </a>
                 </div>
@@ -179,9 +179,9 @@
                 <div class="col-sm-4">
                     <div id="search">
                         <div class="input-group">
-                            <input type="text" name="search" class="form-control" placeholder="Search" value="">
+                            <input type="text" id="search_field" class="form-control" placeholder="Search" value="">
                             <span class="input-group-btn">
-                                    <button onclick="searchByName()" class="btn btn-default button-search" type="button">
+                                    <button onclick="searchByName()" class="btn btn-default button-search" type="submit">
                                         <span class="fa fa-search"></span>
                                     </button>
                                 </span>
@@ -189,17 +189,17 @@
                     </div>
 
                     <div class="header-right">
-                        <div id="welcome">
+                        <div sec:authorize="!isAuthenticated()" id="welcome">
                             Добро пожаловать, покупатель, ты можешь <a href="/login">войти</a> или <a href="/registration">зарегистрироваться</a>.
+                        </div>
+                        <div sec:authorize="isAuthenticated()" id="poka">
+                            Вы уже авторизированы. Нажмите <a th:href="@{/logout}">Выйти</a>, чтобы зайти с другого аккаунта.
                         </div>
 
                         <div class="links">
-                            <a id="link-cart" href="/shopping-cart">
+                            <a sec:authorize="isAuthenticated()" id="link-cart" href="/shopping-cart">
                                 <i class="fa fa-shopping-cart"></i> Корзина
                             </a><br>
-                            <a id="link-checkout" href="checkout.html">
-                                <i class="fa fa-credit-card"></i> Оплатить
-                            </a>
                         </div>
                     </div>
                 </div>
@@ -323,7 +323,7 @@
                         '                        <button sec:authorize="isAuthenticated()" onclick="saveToBucket(' + product.id + ')" type="button" class="btn btn-success">\n' +
                         '                            <i class="fa fa-shopping-cart"></i> <span>Добавить в корзину</span>\n' +
                         '                        </button>\n' +
-                        '                    </div>\n' +
+                        '                    </div></div></div>\n' +
                         '</div>\n' +
                         ' </div>\n' +
                         '</div>\n' +
@@ -337,24 +337,6 @@
         xhttp.send();
     }
 
-    function showBucket() {
-        var xhttp = new XMLHttpRequest();
-        xhttp.onreadystatechange = function () {
-            if (this.readyState == 4 && this.status == 200) {
-                var products = JSON.parse(this.responseText);
-                var html= '';
-                for (var i = 0; i < products.length; i++) {
-                    var bucket = products[i];
-                    console.log(bucket);
-
-                }
-
-                document.getElementById("pocket").innerHTML = html;
-            }
-        };
-        xhttp.open("GET", "http://localhost:8080/bucket/findAll", true);
-        xhttp.send();
-    }
 
     function loadProducts() {
         var xhttp = new XMLHttpRequest();
@@ -387,7 +369,7 @@
                         '                        <button sec:authorize="isAuthenticated()" onclick="saveToBucket(' + product.id + ')" type="button" class="btn btn-success">\n' +
                         '                            <i class="fa fa-shopping-cart"></i> <span>Добавить в корзину</span>\n' +
                         '                        </button>\n' +
-                        '                    </div>\n' +
+                        '                    </div></div></div>\n' +
                         '</div>\n' +
                         ' </div>\n' +
                         '</div>\n' +
@@ -455,11 +437,37 @@
         xhttp.send(JSON.stringify({accountNumberUser: number, money: money, username:username}));
         infoAboutUser();
         }
+        function getCountAndSum() {
+            if (true){
+                var xhttp = new XMLHttpRequest();
+                xhttp.onreadystatechange = function () {
+                    if (this.readyState == 4 && this.status == 200) {
+                        var products = JSON.parse(this.responseText);
+                        var html = '';
+                        var summa = 0;
+                        var countProd = 0;
+                        for (var i = 0; i < products.length; i++) {
+                            var bucket = products[i];
+                            console.log(bucket);
+                            countProd = countProd+bucket.count;
+                            summa =summa + (bucket.cost*bucket.count);
+                        }
+//<a>1 товар- 533.00 $</a>
+                        html = '<a>'+countProd+' товар(ов)- '+summa+' р</a>'
+
+                        document.getElementById("countAndSum").innerHTML = html;
+                    }
+                };
+                xhttp.open("GET", "http://localhost:8080/bucket/findAll", true);
+                xhttp.send();
+            }
+        }
+
+        getCountAndSum();
 
 
     // infoAboutUser();
     loadProducts();
-        showBucket();
 </script>
 </body>
 </html>
