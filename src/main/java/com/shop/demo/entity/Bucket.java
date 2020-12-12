@@ -14,7 +14,7 @@ public class Bucket {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
     private String name;
-    private Integer cost;
+    private Double cost;
     private String description;
     private String path;
     private Integer count;

@@ -1113,7 +1113,7 @@ input[type="checkbox"] {
     margin: 0 auto 10px;
     overflow: hidden;
     text-overflow: ellipsis;
-    white-space: nowrap;
+    white-space: normal;
     text-align: center;
 }
 .product-grid .name a {

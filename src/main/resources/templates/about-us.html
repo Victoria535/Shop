@@ -1,9 +1,11 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="https://www.thymeleaf.org" xmlns:sec="http://www.w3.org/1999/xhtml">
 <head>
-    <title>Вход </title>
-    <meta charset="utf-8">
-
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta charset="UTF-8">
+    <title>О нас</title>
+    <meta name="description" content="Pizza Chef">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
     <link rel="stylesheet" type="text/css" href="font-awesome.min.css">
     <link rel="stylesheet" type="text/css" href="bootstrap.css">
     <link rel="stylesheet" type="text/css" href="style.css">
@@ -11,9 +13,7 @@
     <link rel="stylesheet" type="text/css" href="colorbox.css">
     <link href="fonts.css" rel="stylesheet" type="text/css">
 </head>
-
 <body>
-
 
 <div class="wrap">
     <!-- top panel -->
@@ -31,7 +31,6 @@
                     </a>
                 </div>
             </div>
-
             <div class="divider"></div>
             <!-- menu -->
             <div id="menu" class="menu-container">
@@ -122,48 +121,30 @@
     <!-- //header -->
 
 
-<!--вход-->
     <div id="container" class="content">
-        <div class="container">
-    <div id="content">
+            <div class="container">
+                <div id="notification"></div>
+ 
+                <div id="content">
+    
+                    <ol class="breadcrumb">
+                        <li><a href="/">Главная</a></li>
+                        <li><a href="/about-us">О нас</a></li>
+                    </ol>
+                           
+                    <div class="page-header">
+                        <h1>О нас</h1>
+                    </div>
 
-        <ol class="breadcrumb">
-            <li><a href="/">Главная</a></li>
-            <li><a href="/login">Вход</a></li>
-        </ol>
+                    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+                    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+                    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+                    <hr>
+                    
 
-        <div class="page-header">
-            <h1>Вход</h1>
-        </div>
-
-        <div class="login-content row">
-
-    <div class="right col-sm-6">
-    <form th:action="@{/login}" method="POST" name="signupform">
-        <div class="content">
-            <p class="help-block"><strong>У меня есть аккаунт</strong></p>
-
-            <div class="form-group">
-                <label for="username">Логин</label>
-                <input type="text" class="form-control"  id="username" name="username" placeholder="Введите логин..." value="" oninput="return userNameValidation(this.value)" required>
-            </div>
-
-            <div class="form-group">
-                <label for="password">Пароль:</label>
-                <input type="password" class="form-control" id="password" name="password" placeholder="Введите пароль..." value="" oninput="return passwordValidation(this.value)" required>
-            </div>
-            <div class="form-group">
-                <a href="/registration" class="pull-right btn btn-link btn-xs">Зарегистрироваться</a>
-
-                <input type="submit" id="join-btn" value="Войти" class="btn btn-warning">
+                </div>
             </div>
         </div>
-    </form>
-    </div>
-        </div>
-    </div>
-        </div>
-    </div>
 
     <!-- footer -->
     <div id="footer" class="footer">
@@ -173,14 +154,14 @@
                     <div class="column">
                         <h4>Информация</h4>
                         <ul>
-                            <li><a href="about-us.html">О нас</a></li>
+                            <li><a href="\about-us">О нас</a></li>
 
                         </ul>
                     </div>
                 </div>
                 <div class="col-sm-3 text-right">
                     <div id="powered">
-                        <a href="http://conceptlogic.org/">Create by Vika</a>
+                        <a>Create by Vika</a>
                         <br>
                         Shop © 2020
                     </div>
@@ -190,7 +171,6 @@
     </div>
     <!-- //footer -->
 </div>
-
 
 
 <script>
@@ -222,12 +202,6 @@
 
     getCountAndSum();
 </script>
-
-
-
-<!--        <div class="form-group" th:if="${param.error}">-->
-<!--               Invalid username and password.-->
-<!--                 </div>-->
 
 
 </body>

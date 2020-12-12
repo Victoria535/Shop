@@ -65,8 +65,8 @@ public class BucketController {
     @PutMapping("/buyProducts")
     public UserDTO buyProducts(@AuthenticationPrincipal User user){
         List<Bucket> bucketList = bucketRepository.findByUser(user);
-        Integer sum = bucketList.stream().mapToInt(count-> count.getCost()*count.getCount()).sum();
-        Integer before = user.getAccount();
+        Double sum = bucketList.stream().mapToDouble(count-> count.getCost()*count.getCount()).sum();
+        Double before = user.getAccount();
         user.setAccount(before-sum);
         /*for (Bucket bucket : bucketList){
             bucketRepository.delete(bucket);

@@ -13,5 +13,5 @@ public class UserDTO {
     private Long id;
     private String username;
     private Integer accountNumber;
-    private Integer account;
+    private Double account;
 }

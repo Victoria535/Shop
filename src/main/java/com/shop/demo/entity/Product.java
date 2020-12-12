@@ -14,7 +14,9 @@ public class Product {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
     private String name;
-    private Integer cost;
+    private Double cost;
     private String description;
     private String path;
+    private String composition;
+    private String calories;
 }

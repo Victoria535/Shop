@@ -13,6 +13,8 @@ public class ProductConverter {
         product.setCost(productDTO.getCost());
         product.setDescription(productDTO.getDescription());
         product.setPath(productDTO.getPath());
+        product.setComposition(productDTO.getComposition());
+        product.setCalories(productDTO.getCalories());
         return product;
     }
 
@@ -23,6 +25,8 @@ public class ProductConverter {
                 .cost(product.getCost())
                 .description(product.getDescription())
                 .path(product.getPath())
+                .calories(product.getCalories())
+                .composition(product.getComposition())
                 .build();
     }
 }

@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html dir="ltr" lang="ru"
-      xmlns:th="http://www.w3.org/1999/xhtml" xmlns:sec="http://www.w3.org/1999/xhtml"><head>
+      xmlns:th="http://www.w3.org/1999/xhtml" xmlns:sec="http://www.w3.org/1999/xhtml">
+<head>
     <meta charset="UTF-8">
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
@@ -25,51 +26,23 @@
                     <a href="/shopping-cart" title="Корзина">
                            <span id="cart-total">
                                <i class="fa fa-shopping-cart fa-lg"></i>&nbsp;
-                               <span class="hidden-xs">1 товар- 533.00 $</span>
+                               <span id="countAndSum" class="hidden-xs"> </span>
                            </span>
                     </a>
                 </div>
             </div>
 
             <div class="divider"></div>
-
             <!-- menu -->
             <div id="menu" class="menu-container">
-                <button type="button" class="menu-toggle" data-toggle="collapse" data-target="#menu-mobile">
-                    <span class="sr-only">Toggle navigation</span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                </button>
 
                 <div class="collapse menu-collapse" id="menu-mobile">
                     <ul class="nav nav-pills">
-                        <li><a href="">Овощи и фрукты</a>
-                            <div>
-                                <div class="arrow"></div>
-                                <ul>
-                                    <li><a href="">Овощи</a></li>
-                                    <li><a href="">Фрукты</a></li>
-                                    <li><a href="">Грибы</a></li>
-                                    <li><a href="">Зелень</a></li>
-                                </ul>
-                            </div>
-                        </li>
-                        <li>
-                            <a href="">Хлеб<i class="fa fa-angle-down"></i></a>
-                            <div>
-                                <div class="arrow"></div>
-                                <ul>
-                                    <li><a href="">Хлеб и сдоба</a></li>
-                                    <li><a href="">Кондитерские изделия</a></li>
-                                </ul>
-                            </div>
-                        </li>
-                        <li><a href="">Молочные продукты</a></li>
+                        <li><a href="">Завтраки</a></li>
 
-                        <li><a href="">Бакалея</a></li>
-                        <li><a href="">Мясо, рыба</a></li>
-                        <li><a href="">Напитки</a></li>
+                        <li><a href="">Обеды</a></li>
+                        <li><a href="">Ужины</a></li>
+                        <li><a href="">Десерты</a></li>
 
                     </ul>
                 </div>
@@ -119,25 +92,30 @@
                 <div class="col-sm-4">
                     <div id="search">
                         <div class="input-group">
-                            <input type="text" name="search" class="form-control" placeholder="Search" value="">
+                            <input type="text" id="search_field" class="form-control" placeholder="Search" value="">
                             <span class="input-group-btn">
-                                    <button class="btn btn-default button-search" type="button"><span class="fa fa-search"></span></button>
+                                    <button onclick="searchByName()" class="btn btn-default button-search"
+                                            type="submit">
+                                        <span class="fa fa-search"></span>
+                                    </button>
                                 </span>
                         </div>
                     </div>
 
                     <div class="header-right">
-                        <div id="welcome">
-                            Добро пожаловать, покупатель, ты можешь <a href="/login">войти</a> или <a href="/registration">зарегистрироваться</a>.
+                        <div sec:authorize="!isAuthenticated()" id="welcome">
+                            Добро пожаловать, покупатель, ты можешь <a href="/login">войти</a> или <a
+                                href="/registration">зарегистрироваться</a>.
+                        </div>
+                        <div sec:authorize="isAuthenticated()" id="poka">
+                            Вы уже авторизированы. Нажмите <a th:href="@{/logout}">Выйти</a>, чтобы зайти с другого
+                            аккаунта.
                         </div>
 
                         <div class="links">
-                            <a id="link-cart" href="/shopping-cart">
+                            <a sec:authorize="isAuthenticated()" id="link-cart" href="/shopping-cart">
                                 <i class="fa fa-shopping-cart"></i> Корзина
                             </a><br>
-                            <a id="link-checkout" href="checkout.html">
-                                <i class="fa fa-credit-card"></i> Оплатить
-                            </a>
                         </div>
                     </div>
                 </div>
@@ -146,102 +124,131 @@
     </div>
     <!-- //header -->
 
-        <div id="container" class="content">
-            <div class="container">
 
-                <div id="content">
-                    <ol class="breadcrumb">
-                        <li><a href="/">Главная</a></li>
-                    </ol>
+    <div id="container" class="content">
+        <div class="container">
 
-                    <div class="product-info">
-                        <div class="row">
-                            <div class="col-md-4 popup-gallery">
-                                <div class="image">
-                                    <a class="imagebox">
-                                        <img src="salt.jpg" id="image">
-                                    </a>
-                                </div>
-                
+            <div id="content">
+                <ol class="breadcrumb">
+                    <li><a href="/">Главная</a></li>
+                </ol>
+
+                <div class="product-info">
+                    <div class="row">
+                        <div class="col-md-4 popup-gallery">
+                            <div class="image">
+                                <a class="imagebox">
+                                    <img src="salt.jpg" id="image">
+                                </a>
                             </div>
-            
-                            <div class="col-md-8 product-center clearfix">
-                                <h1>ИМЯ</h1>
-                                <div class="description">
-                                     Описание
-                                </div>
-                                <div class="description">
-                                    <h2>Состав:</h2>
-                                    вввввввввввввввввввввввввввввввввввввввввввввв
-                                </div>
-                                <div class="description">
-                                    <h2>Каллории:</h2>
-                                    вввввввввввввввввввввввввввввввввввввввввввввв
-                                </div>
 
-                            </div>
                         </div>
 
-                        <div class="cart-area">
-                            <div class="row">
+                        <div class="col-md-8 product-center clearfix">
+                            <h1>ИМЯ</h1>
+                            <div class="description">
+                                Описание
+                            </div>
+                            <div class="description">
+                                <h2>Состав:</h2>
+                                вввввввввввввввввввввввввввввввввввввввввввввв
+                            </div>
+                            <div class="description">
+                                <h2>Каллории:</h2>
+                                вввввввввввввввввввввввввввввввввввввввввввввв
+                            </div>
 
-                                <div class="col-md-4">
-                                    <div class="price">
-                                        <div>
-                                            <span class="price-fixed">270.00 $</span>
-                                        </div>
+                        </div>
+                    </div>
+
+                    <div class="cart-area">
+                        <div class="row">
+
+                            <div class="col-md-4">
+                                <div class="price">
+                                    <div>
+                                        <span class="price-fixed">270.00 $</span>
                                     </div>
-                    
-                                    <div class="text-center" style="font-size: 12px"></div>
                                 </div>
 
-                                <div class="col-md-4">
-                                    <div class="cart">
-                                        <div class="add-to-cart clearfix" style="margin-top: 20px">
-                                            <div class="input-group input-group-lg">
+                                <div class="text-center" style="font-size: 12px"></div>
+                            </div>
+
+                            <div class="col-md-4">
+                                <div class="cart">
+                                    <div class="add-to-cart clearfix" style="margin-top: 20px">
+                                        <div class="input-group input-group-lg">
                                                 <span class="input-group-btn">
                                                     <button type="button" id="button-cart" class="btn btn-success">
                                                         <i class="fa fa-shopping-cart"></i> &nbsp;
                                                         Добавить в корзину
                                                     </button>
                                                 </span>
-                                            </div>
-                                            <input type="hidden" name="product_id" size="2" value="44">
                                         </div>
+                                        <input type="hidden" name="product_id" size="2" value="44">
                                     </div>
                                 </div>
-
                             </div>
+
                         </div>
                     </div>
                 </div>
             </div>
         </div>
+    </div>
 
-                            <!-- footer -->
-                        <div id="footer" class="footer">
-                            <div class="container">
-                                <div class="row">
-                                    <div class="col-sm-3">
-                                        <div class="column">
-                                            <h4>Информация</h4>
-                                              <ul>
-                                                <li><a href="about-us.html">О нас</a></li>
-                                                </ul>
-                                            </div>
-                                        </div>
-                                         <div class="col-sm-3 text-right">
-                                            <div id="powered">
-                                                <a href="http://conceptlogic.org/">Create by Vika</a>
-                                                <br>
-                                                Shop © 2020
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
+    <!-- footer -->
+    <div id="footer" class="footer">
+        <div class="container">
+            <div class="row">
+                <div class="col-sm-3">
+                    <div class="column">
+                        <h4>Информация</h4>
+                        <ul>
+                            <li><a href="about-us.html">О нас</a></li>
+                        </ul>
                     </div>
-                            <!-- //footer -->
+                </div>
+                <div class="col-sm-3 text-right">
+                    <div id="powered">
+                        <a href="http://conceptlogic.org/">Create by Vika</a>
+                        <br>
+                        Shop © 2020
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- //footer -->
+<script>
+    function getCountAndSum() {
+        if (true) {
+            var xhttp = new XMLHttpRequest();
+            xhttp.onreadystatechange = function () {
+                if (this.readyState == 4 && this.status == 200) {
+                    var products = JSON.parse(this.responseText);
+                    var html = '';
+                    var summa = 0;
+                    var countProd = 0;
+                    for (var i = 0; i < products.length; i++) {
+                        var bucket = products[i];
+                        console.log(bucket);
+                        countProd = countProd + bucket.count;
+                        summa = summa + (bucket.cost * bucket.count);
+                    }
+//<a>1 товар- 533.00 $</a>
+                    html = '<a>' + countProd + ' товар(ов)- ' + summa.toFixed(2) + ' р</a>'
 
+                    document.getElementById("countAndSum").innerHTML = html;
+                }
+            };
+            xhttp.open("GET", "http://localhost:8080/bucket/findAll", true);
+            xhttp.send();
+        }
+    }
+
+    getCountAndSum();
+</script>
 </body>
 </html>

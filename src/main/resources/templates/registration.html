@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="https://www.thymeleaf.org">
+<html lang="en" xmlns:th="https://www.thymeleaf.org" xmlns:sec="http://www.w3.org/1999/xhtml">
 <head>
     <title>Регистрация </title>
     <meta charset="utf-8">
@@ -14,8 +14,6 @@
 
 <body>
 
-
-
 <div class="wrap">
     <!-- top panel -->
     <div class="navbar navbar-inverse navbar-fixed-top topbar">
@@ -27,44 +25,22 @@
                     <a href="/shopping-cart" title="Корзина">
                            <span id="cart-total">
                                <i class="fa fa-shopping-cart fa-lg"></i>&nbsp;
-                               <span class="hidden-xs"> 0 товаров - 0.00р</span>
+                               <span id="countAndSum" class="hidden-xs"> </span>
                            </span>
                     </a>
                 </div>
             </div>
-
-
+            <div class="divider"></div>
             <!-- menu -->
             <div id="menu" class="menu-container">
 
                 <div class="collapse menu-collapse" id="menu-mobile">
                     <ul class="nav nav-pills">
-                        <li><a href="">Овощи и фрукты<i class="fa fa-angle-down"></i></a>
-                            <div>
-                                <div class="arrow"></div>
-                                <ul>
-                                    <li><a href="">Овощи</a></li>
-                                    <li><a href="">Фрукты</a></li>
-                                    <li><a href="">Грибы</a></li>
-                                    <li><a href="">Зелень</a></li>
-                                </ul>
-                            </div>
-                        </li>
-                        <li>
-                            <a href="">Хлеб<i class="fa fa-angle-down"></i></a>
-                            <div>
-                                <div class="arrow"></div>
-                                <ul>
-                                    <li><a href="">Хлеб и сдоба</a></li>
-                                    <li><a href="">Кондитерские изделия</a></li>
-                                </ul>
-                            </div>
-                        </li>
-                        <li><a href="">Молочные продукты</a></li>
+                        <li><a href="">Завтраки</a></li>
 
-                        <li><a href="">Бакалея<i class="fa fa-angle-down"></i></a></li>
-                        <li><a href="">Мясо, рыба</a></li>
-                        <li><a href="">Напитки</a></li>
+                        <li><a href="">Обеды</a></li>
+                        <li><a href="">Ужины</a></li>
+                        <li><a href="">Десерты</a></li>
 
                     </ul>
                 </div>
@@ -114,9 +90,9 @@
                 <div class="col-sm-4">
                     <div id="search">
                         <div class="input-group">
-                            <input type="text" name="search" class="form-control" placeholder="Search" value="">
+                            <input type="text" id="search_field" class="form-control" placeholder="Search" value="">
                             <span class="input-group-btn">
-                                    <button onclick="searchByName()" class="btn btn-default button-search" type="button">
+                                    <button onclick="searchByName()" class="btn btn-default button-search" type="submit">
                                         <span class="fa fa-search"></span>
                                     </button>
                                 </span>
@@ -124,15 +100,17 @@
                     </div>
 
                     <div class="header-right">
-                        <div id="welcome">
+                        <div sec:authorize="!isAuthenticated()" id="welcome">
                             Добро пожаловать, покупатель, ты можешь <a href="/login">войти</a> или <a href="/registration">зарегистрироваться</a>.
+                        </div>
+                        <div sec:authorize="isAuthenticated()" id="poka">
+                            Вы уже авторизированы. Нажмите <a th:href="@{/logout}">Выйти</a>, чтобы зайти с другого аккаунта.
                         </div>
 
                         <div class="links">
-                            <a id="link-cart" href="/shopping-cart">
+                            <a sec:authorize="isAuthenticated()" id="link-cart" href="/shopping-cart">
                                 <i class="fa fa-shopping-cart"></i> Корзина
                             </a><br>
-
                         </div>
                     </div>
                 </div>
@@ -194,7 +172,7 @@
                     <div class="column">
                         <h4>Информация</h4>
                         <ul>
-                            <li><a href="about-us.html">О нас</a></li>
+                            <li><a href="\about-us">О нас</a></li>
 
                         </ul>
                     </div>
@@ -212,32 +190,7 @@
     <!-- //footer -->
 </div>
 
-<!--    <div class="back">-->
-<!--<div class="signupSection">-->
-<!--    <div class="info">-->
-<!--        <h2>Добро пожаловать</h2>-->
-<!--        <i class="icon ion-ios-ionic-outline" aria-hidden="true"></i>-->
-<!--        <p>Наш магазин тебя ждет</p>-->
-<!--    </div>-->
-<!--    <form th:action="@{/login}" method="POST" class="signupForm" name="signupform">-->
-<!--        <h2>Регистрация</h2>-->
-<!--        <ul class="noBullet">-->
-<!--            <li>-->
-<!--                <label for="username"></label>-->
-<!--                <input type="text" class="inputFields" id="username" name="username" placeholder="Username" value="" oninput="return userNameValidation(this.value)" required/>-->
-<!--            </li>-->
-<!--            <li>-->
-<!--                <label for="password"></label>-->
-<!--                <input type="password" class="inputFields" id="password" name="password" placeholder="Password" value="" oninput="return passwordValidation(this.value)" required/>-->
-<!--            </li>-->
-<!--            <span class="text"> <a href="/login">Войти</a></span>-->
-<!--            <li id="center-btn">-->
-<!--                <input type="submit" onclick="createUser()" id="join-btn" name="Регистрация" alt="Регистрация" value="Регистрация">-->
-<!--            </li>-->
-<!--        </ul>-->
-<!--    </form>-->
-<!--</div>-->
-<!--</div>-->
+
 <script>
 
     function createUser() {
@@ -250,6 +203,33 @@
         xmlhttp.send(JSON.stringify({username: username, password: password}));
     }
 
+    function getCountAndSum() {
+        if (true) {
+            var xhttp = new XMLHttpRequest();
+            xhttp.onreadystatechange = function () {
+                if (this.readyState == 4 && this.status == 200) {
+                    var products = JSON.parse(this.responseText);
+                    var html = '';
+                    var summa = 0;
+                    var countProd = 0;
+                    for (var i = 0; i < products.length; i++) {
+                        var bucket = products[i];
+                        console.log(bucket);
+                        countProd = countProd + bucket.count;
+                        summa = summa + (bucket.cost * bucket.count);
+                    }
+//<a>1 товар- 533.00 $</a>
+                    html = '<a>' + countProd + ' товар(ов)- ' + summa.toFixed(2) + ' р</a>'
+
+                    document.getElementById("countAndSum").innerHTML = html;
+                }
+            };
+            xhttp.open("GET", "http://localhost:8080/bucket/findAll", true);
+            xhttp.send();
+        }
+    }
+
+    getCountAndSum();
 </script>
 </body>
 </html>

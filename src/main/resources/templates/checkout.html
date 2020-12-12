@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="https://www.thymeleaf.org">
+<html lang="en" xmlns:th="https://www.thymeleaf.org" xmlns:sec="http://www.w3.org/1999/xhtml">
 <head>
 	<title>Оплата </title>
 	<meta charset="utf-8">
@@ -24,44 +24,22 @@
 					<a href="/shopping-cart" title="Корзина">
                            <span id="cart-total">
                                <i class="fa fa-shopping-cart fa-lg"></i>&nbsp;
-                               <span class="hidden-xs"> 0 товаров - 0.00р</span>
+                               <span id="countAndSum" class="hidden-xs"> </span>
                            </span>
 					</a>
 				</div>
 			</div>
-
-
+			<div class="divider"></div>
 			<!-- menu -->
 			<div id="menu" class="menu-container">
 
 				<div class="collapse menu-collapse" id="menu-mobile">
 					<ul class="nav nav-pills">
-						<li><a href="">Овощи и фрукты<i class="fa fa-angle-down"></i></a>
-							<div>
-								<div class="arrow"></div>
-								<ul>
-									<li><a href="">Овощи</a></li>
-									<li><a href="">Фрукты</a></li>
-									<li><a href="">Грибы</a></li>
-									<li><a href="">Зелень</a></li>
-								</ul>
-							</div>
-						</li>
-						<li>
-							<a href="">Хлеб<i class="fa fa-angle-down"></i></a>
-							<div>
-								<div class="arrow"></div>
-								<ul>
-									<li><a href="">Хлеб и сдоба</a></li>
-									<li><a href="">Кондитерские изделия</a></li>
-								</ul>
-							</div>
-						</li>
-						<li><a href="">Молочные продукты</a></li>
+						<li><a href="">Завтраки</a></li>
 
-						<li><a href="">Бакалея<i class="fa fa-angle-down"></i></a></li>
-						<li><a href="">Мясо, рыба</a></li>
-						<li><a href="">Напитки</a></li>
+						<li><a href="">Обеды</a></li>
+						<li><a href="">Ужины</a></li>
+						<li><a href="">Десерты</a></li>
 
 					</ul>
 				</div>
@@ -111,9 +89,9 @@
 				<div class="col-sm-4">
 					<div id="search">
 						<div class="input-group">
-							<input type="text" name="search" class="form-control" placeholder="Search" value="">
+							<input type="text" id="search_field" class="form-control" placeholder="Search" value="">
 							<span class="input-group-btn">
-                                    <button onclick="searchByName()" class="btn btn-default button-search" type="button">
+                                    <button onclick="searchByName()" class="btn btn-default button-search" type="submit">
                                         <span class="fa fa-search"></span>
                                     </button>
                                 </span>
@@ -121,15 +99,17 @@
 					</div>
 
 					<div class="header-right">
-						<div id="welcome">
+						<div sec:authorize="!isAuthenticated()" id="welcome">
 							Добро пожаловать, покупатель, ты можешь <a href="/login">войти</a> или <a href="/registration">зарегистрироваться</a>.
+						</div>
+						<div sec:authorize="isAuthenticated()" id="poka">
+							Вы уже авторизированы. Нажмите <a th:href="@{/logout}">Выйти</a>, чтобы зайти с другого аккаунта.
 						</div>
 
 						<div class="links">
-							<a id="link-cart" href="/shopping-cart">
+							<a sec:authorize="isAuthenticated()" id="link-cart" href="/shopping-cart">
 								<i class="fa fa-shopping-cart"></i> Корзина
 							</a><br>
-
 						</div>
 					</div>
 				</div>
@@ -137,7 +117,6 @@
 		</div>
 	</div>
 	<!-- //header -->
-
 
 
 		<div id="container" class="content">
@@ -161,9 +140,11 @@
 							<div class="checkout-content panel-body" style="display: none">
 								<div class="form-group">
 									<div class="radio">
-										<label for="payment-address-existing">
+										<label for="adress">
 											Введите свой адрес
 										</label>
+										<input type="text" name="shipping_method" value="adress" id="adress">
+
 									</div>
 
 									<div id="payment-existing" style="display: block;">
@@ -178,28 +159,19 @@
 						</div>
 
 						<div id="shipping-method" class="panel panel-default">
-							<div class="checkout-heading panel-heading">Step 4: Delivery Method</div>
+							<div class="checkout-heading panel-heading">Шаг 2: Способ доставки</div>
 							<div class="checkout-content panel-body" style="display: none">
-								<h4>Выюерите способ доставки</h4>
+								<h4>Выберите способ доставки</h4>
 
 								<div class="form-group">
-									<label><strong>Flat Rate</strong></label><br>
 									<label for="flat.flat">
 										<input type="radio" name="shipping_method" value="flat.flat" id="flat.flat" checked="checked">
-										Flat Shipping Rate — <strong>$0.14</strong>
+										Доставка курьером <strong> бесплатно </strong>
 									</label>
-								</div>
-						
-								<div class="form-group">
-									<label>Add Comments About Your Order</label>
-									<textarea name="comment" class="form-control" rows="4"></textarea>
-								</div>
-
-								<div class="buttons">
-									<input type="button" value="Continue" id="button-shipping-method" class="btn btn-warning">
 								</div>
 							</div>
 						</div>
+
 						<div id="payment-method" class="panel panel-default">
 							<div class="checkout-heading panel-heading">Step 5: Payment Method</div>
 							<div class="checkout-content panel-body" style="display: none">
@@ -234,58 +206,23 @@
 								<div class="checkout-product table-responsive">
 									<table class="table table-bordered table-hover">
 										<thead>
-											<tr>
-												<th class="name">Product Name</th>
-												<th class="model">Model</th>
-												<th class="quantity">Quantity</th>
-												<th class="price">Price</th>
-												<th class="total">Total</th>
-											</tr>
+										<tr>
+											<th class="model"></th>
+											<th class="image">Фото</th>
+											<th class="name">Название</th>
+											<th class="quantity">Количество</th>
+											<th class="price">Цена</th>
+										</tr>
 										</thead>
 
-										<tbody>
-											<tr>
-												<td class="name">
-													<a href="margarita.html">Margarita</a>
-													<br>
-													&nbsp;<small> — Pizza weight: 1200 grs</small>
-												</td>
-												<td class="model">Маргарита</td>
-												<td class="quantity">1</td>
-												<td class="price">$12.83</td>
-												<td class="total">$12.83</td>
-											</tr>
+										<tbody id="bucket">
+
 										</tbody>
 
 										<tfoot>
-
 											<tr>
 												<td colspan="4" class="price text-right">
-													<b>Sub-Total:</b>
-												</td>
-												<td class="total">$12.83</td>
-											</tr>
-											<tr>
-												<td colspan="4" class="price text-right">
-													<b>Flat Shipping Rate:</b>
-												</td>
-												<td class="total">$0.14</td>
-											</tr>
-											<tr>
-												<td colspan="4" class="price text-right">
-													<b>Eco Tax (-2.00):</b>
-												</td>
-												<td class="total">$0.11</td>
-											</tr>
-											<tr>
-												<td colspan="4" class="price text-right">
-													<b>НДС 18%:</b>
-												</td>
-												<td class="total">$2.33</td>
-											</tr>
-											<tr>
-												<td colspan="4" class="price text-right">
-													<b>Total:</b>
+													<b>Итого:</b>
 												</td>
 												<td class="total">$15.42</td>
 											</tr>
@@ -302,9 +239,14 @@
 						</div>
 					</div>
 
+				<script type="text/javascript">
 
+					$(document).on('click', '.checkout-heading', function() {
+						$('.checkout-content').slideUp('slow');
+						$(this).parent().find('.checkout-content').slideDown('slow');
+					});
 
-
+				</script>
 
 			</div>
 		</div>
@@ -317,7 +259,7 @@
 							<div class="column">
 								<h4>Информация</h4>
 								<ul>
-									<li><a href="about-us.html">О нас</a></li>
+									<li><a href="\about-us">О нас</a></li>
 
 								</ul>
 							</div>
@@ -335,5 +277,34 @@
 			<!-- //footer -->
 		</div>
 
+<script>
+	function getCountAndSum() {
+		if (true) {
+			var xhttp = new XMLHttpRequest();
+			xhttp.onreadystatechange = function () {
+				if (this.readyState == 4 && this.status == 200) {
+					var products = JSON.parse(this.responseText);
+					var html = '';
+					var summa = 0;
+					var countProd = 0;
+					for (var i = 0; i < products.length; i++) {
+						var bucket = products[i];
+						console.log(bucket);
+						countProd = countProd + bucket.count;
+						summa = summa + (bucket.cost * bucket.count);
+					}
+//<a>1 товар- 533.00 $</a>
+					html = '<a>' + countProd + ' товар(ов)- ' + summa.toFixed(2) + ' р</a>'
+
+					document.getElementById("countAndSum").innerHTML = html;
+				}
+			};
+			xhttp.open("GET", "http://localhost:8080/bucket/findAll", true);
+			xhttp.send();
+		}
+	}
+
+	getCountAndSum();
+</script>
 </body>
 </html>

@@ -98,38 +98,17 @@
                 </div>
             </div>
 
-
+            <div class="divider"></div>
             <!-- menu -->
             <div id="menu" class="menu-container">
 
                 <div class="collapse menu-collapse" id="menu-mobile">
                     <ul class="nav nav-pills">
-                        <li><a href="">Овощи и фрукты<i class="fa fa-angle-down"></i></a>
-                        <div>
-                            <div class="arrow"></div>
-                            <ul>
-                                <li><a href="">Овощи</a></li>
-                                <li><a href="">Фрукты</a></li>
-                                <li><a href="">Грибы</a></li>
-                                <li><a href="">Зелень</a></li>
-                            </ul>
-                        </div>
-                        </li>
-                        <li>
-                            <a href="">Хлеб<i class="fa fa-angle-down"></i></a>
-                            <div>
-                                <div class="arrow"></div>
-                                <ul>
-                                    <li><a href="">Хлеб и сдоба</a></li>
-                                    <li><a href="">Кондитерские изделия</a></li>
-                                </ul>
-                            </div>
-                        </li>
-                        <li><a href="">Молочные продукты</a></li>
+                        <li><a href="">Завтраки</a></li>
 
-                        <li><a href="">Бакалея<i class="fa fa-angle-down"></i></a></li>
-                        <li><a href="">Мясо, рыба</a></li>
-                        <li><a href="">Напитки</a></li>
+                        <li><a href="">Обеды</a></li>
+                        <li><a href="">Ужины</a></li>
+                        <li><a href="">Десерты</a></li>
 
                     </ul>
                 </div>
@@ -209,21 +188,6 @@
     <!-- //header -->
 
 
-<!--            <li>-->
-<!--                <div class="searh">-->
-<!--                    <input id="search_field" class="input_search" type="text" placeholder="Искать здесь...">-->
-<!--                    <button onclick="searchByName()" type="submit" class="searchbut"></button>-->
-<!--                </div>-->
-<!--            </li>-->
-
-
-<!--            <li sec:authorize="!isAuthenticated()"> <a href="/login">Войти</a></li>-->
-<!--            <li sec:authorize="isAuthenticated()"> <a th:href="@{/logout}">Выйти</a></li>-->
-        </ul>
-    </div>
-</div>
-
-
 
 <div sec:authorize="isAuthenticated()" id="mySidenav" class="sidenav">
 
@@ -257,14 +221,14 @@
                 <div class="column">
                     <h4>Информация</h4>
                     <ul>
-                        <li><a href="about-us.html">О нас</a></li>
+                        <li><a href="/about-us">О нас</a></li>
 
                     </ul>
                 </div>
             </div>
             <div class="col-sm-3 text-right">
                 <div id="powered">
-                    <a href="http://conceptlogic.org/">Create by Vika</a>
+                    <a>Create by Vika</a>
                     <br>
                     Shop © 2020
                 </div>
@@ -273,11 +237,16 @@
     </div>
 </div>
 <!-- //footer -->
-<div>
-    <ul id="userInfo" >
-
-    </ul>
 </div>
+
+
+
+<ul id="userInfo" >
+
+</ul>
+
+
+
 <span class="userSpan" id="usernameAuth" th:text="${#authentication.getName()}"></span>
 
     <script>
@@ -316,7 +285,7 @@
                         '                    </div>\n' +
                         '                    <div class="price">\n' +
                         '                        <div>\n' +
-                        '                            <span class="price-fixed">' + product.cost + '</span>\n' +
+                        '                            <span class="price-fixed">' + product.cost + 'р</span>\n' +
                         '                        </div>\n' +
                         '                    </div>\n' +
                         '                    <div class="cart">\n' +
@@ -362,7 +331,7 @@
                         '                    </div>\n' +
                         '                    <div class="price">\n' +
                         '                        <div>\n' +
-                        '                            <span class="price-fixed">' + product.cost + '</span>\n' +
+                        '                            <span class="price-fixed">' + product.cost + 'р</span>\n' +
                         '                        </div>\n' +
                         '                    </div>\n' +
                         '                    <div class="cart">\n' +
@@ -453,7 +422,7 @@
                             summa =summa + (bucket.cost*bucket.count);
                         }
 //<a>1 товар- 533.00 $</a>
-                        html = '<a>'+countProd+' товар(ов)- '+summa+' р</a>'
+                        html = '<a>' + countProd + ' товар(ов)- ' + summa.toFixed(2) + ' р</a>'
 
                         document.getElementById("countAndSum").innerHTML = html;
                     }
