@@ -43,4 +43,10 @@ public class ProductServiceImpl implements ProductService {
         return product;
     }
 
+    @Override
+    public List<ProductDTO> getProductsByType(String type) {
+        return productRepository.findByType(type)
+                .stream().map(productConverter::fromProductToProductDTO).collect(Collectors.toList());
+    }
+
 }

@@ -19,4 +19,5 @@ public class Product {
     private String path;
     private String composition;
     private String calories;
+    private String type;
 }

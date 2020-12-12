@@ -34,4 +34,9 @@ public class ProductController {
         return productService.findAll();
     }
 
+    @GetMapping("/getByType")
+    public List<ProductDTO> findProductsByType(@RequestParam String type){
+        return productService.getProductsByType(type);
+    }
+
 }

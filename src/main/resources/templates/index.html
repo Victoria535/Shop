@@ -104,11 +104,10 @@
 
                 <div class="collapse menu-collapse" id="menu-mobile">
                     <ul class="nav nav-pills">
-                        <li><a href="">Завтраки</a></li>
-
-                        <li><a href="">Обеды</a></li>
-                        <li><a href="">Ужины</a></li>
-                        <li><a href="">Десерты</a></li>
+                        <li><a onclick="searchByType('Завтрак')">Завтраки</a></li>
+                        <li><a onclick="searchByType('Обед')">Обеды</a></li>
+                        <li><a onclick="searchByType('Ужин')">Ужины</a></li>
+                        <li><a onclick="searchByType('Десерт')">Десерты</a></li>
 
                     </ul>
                 </div>
@@ -306,6 +305,51 @@
         xhttp.send();
     }
 
+        function searchByType(type) {
+            // var name = document.getElementById("search_field").value;
+            var xhttp = new XMLHttpRequest();
+            xhttp.onreadystatechange = function () {
+                if (this.readyState == 4 && this.status == 200) {
+                    var products = JSON.parse(this.responseText);
+                    var html= '';
+                    for (var i = 0; i < products.length; i++) {
+                        var product = products[i];
+                        console.log(product);
+                        html = html + '<div class="box-content tab-content" id="product-slideshow0">\n' +
+                            '     <div class="box-product product-grid tab-pane fade in active" id="product-tab-0-featured">\n' +
+                            '   <!-- Begin box-product div -->\n' +
+                            '            <div class="item">\n' +
+                            '                <div class="image">\n' +
+                            '                    <a href="">\n' +
+                            '                        <img src="' + product.path + '" width="240" height="240">\n' +
+                            '                    </a>\n' +
+                            '                </div>\n' +
+                            '                <div class="caption">\n' +
+                            '                    <div class="name">\n' +
+                            '                        <a href="">' + product.name + '</a>\n' +
+                            '                    </div>\n' +
+                            '                    <div class="price">\n' +
+                            '                        <div>\n' +
+                            '                            <span class="price-fixed">' + product.cost + 'р</span>\n' +
+                            '                        </div>\n' +
+                            '                    </div>\n' +
+                            '                    <div class="cart">\n' +
+                            '                        <button sec:authorize="isAuthenticated()" onclick="saveToBucket(' + product.id + ')" type="button" class="btn btn-success">\n' +
+                            '                            <i class="fa fa-shopping-cart"></i> <span>Добавить в корзину</span>\n' +
+                            '                        </button>\n' +
+                            '                    </div></div></div>\n' +
+                            '</div>\n' +
+                            ' </div>\n' +
+                            '</div>\n' +
+                            '   </div>\n';
+                    }
+
+                    document.getElementById("productList").innerHTML = html;
+                }
+            };
+            xhttp.open("GET", "http://localhost:8080/products/getByType?type=" + type, true);
+            xhttp.send();
+        }
 
     function loadProducts() {
         var xhttp = new XMLHttpRequest();

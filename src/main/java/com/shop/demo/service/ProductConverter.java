@@ -15,6 +15,7 @@ public class ProductConverter {
         product.setPath(productDTO.getPath());
         product.setComposition(productDTO.getComposition());
         product.setCalories(productDTO.getCalories());
+        product.setType(productDTO.getType());
         return product;
     }
 
@@ -27,6 +28,7 @@ public class ProductConverter {
                 .path(product.getPath())
                 .calories(product.getCalories())
                 .composition(product.getComposition())
+                .type(product.getType())
                 .build();
     }
 }

@@ -17,4 +17,5 @@ public class ProductDTO {
     private String path;
     private String composition;
     private String calories;
+    private String type;
 }
