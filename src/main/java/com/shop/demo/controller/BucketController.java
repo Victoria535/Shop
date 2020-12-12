@@ -5,6 +5,7 @@ import com.shop.demo.dto.UserDTO;
 import com.shop.demo.entity.Bucket;
 import com.shop.demo.entity.User;
 import com.shop.demo.repository.BucketRepository;
+import com.shop.demo.repository.OrderRepository;
 import com.shop.demo.repository.ProductRepository;
 import com.shop.demo.service.ProductService;
 import com.shop.demo.service.UserServiceConv;
@@ -32,6 +33,8 @@ public class BucketController {
     private BucketRepository bucketRepository;
     @Autowired
     private ProductService productService;
+    @Autowired
+    private OrderRepository orderRepository;
 
     //    @PreAuthorize("hasAuthority('USER')")
     @GetMapping("/product/{id}")

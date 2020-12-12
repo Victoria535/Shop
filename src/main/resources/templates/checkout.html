@@ -148,9 +148,10 @@
                             </div>
 
                             <div>
-                                <select name="address_id" size="5" class="form-control">
+                               <!-- <select name="address_id" size="5" class="form-control">
                                     <option value="4">name</option>
-                                </select>
+                                </select>-->
+                                <input type="text" id="inputName" class="form-control" placeholder="name" value="">
                             </div>
                         </div>
 
@@ -161,9 +162,7 @@
                                 </label>
                             </div>
                             <div>
-                                <select name="address_id" size="5" class="form-control">
-                                    <option value="4">phone</option>
-                                </select>
+                                <input type="text" id="inputPhone" class="form-control" placeholder="phone" value="">
                             </div>
 
                         </div>
@@ -179,9 +178,7 @@
                         </div>
 
                         <div id="payment-existing" style="display: block;">
-                            <select name="address_id" size="5" class="form-control">
-                                <option value="5">Российская Федерация</option>
-                            </select>
+                            <input type="text" id="inputAddress" class="form-control" placeholder="address" value="">
                         </div>
                     </div>
                 </div>
@@ -215,7 +212,7 @@
                         <td class="text-right">
                             <strong>Итого:</strong>
                         </td>
-                        <td class="total">$15.42</td>
+                        <td id="Sum" class="total"></td>
 
                     </tr>
                     </tfoot>
@@ -224,7 +221,7 @@
             <br>
             <div class="payment">
                 <div class="buttons">
-                    <input type="button" value="Оплатить" id="button-confirm" class="btn btn-warning">
+                    <button onclick="pay()" type="submit" id="button-confirm" class="btn btn-warning">Оплатить</button>
                 </div>
             </div>
         </div>
@@ -284,6 +281,67 @@
         }
     }
 
+    function getSum() {
+        if (true) {
+            var xhttp = new XMLHttpRequest();
+            xhttp.onreadystatechange = function () {
+                if (this.readyState == 4 && this.status == 200) {
+                    var products = JSON.parse(this.responseText);
+                    var html = '';
+                    var summa = 0;
+                    for (var i = 0; i < products.length; i++) {
+                        var bucket = products[i];
+                        console.log(bucket);
+                        summa = summa + (bucket.cost * bucket.count);
+                    }
+
+                    html = '<a>' + summa.toFixed(2) + '</a>'
+
+                    document.getElementById("Sum").innerHTML = html;
+                }
+            };
+            xhttp.open("GET", "http://localhost:8080/bucket/findAll", true);
+            xhttp.send();
+        }
+    }
+
+    function pay() {
+        var xhttp = new XMLHttpRequest();
+        getBucket();
+        xhttp.open("PUT", "http://localhost:8080/buyProducts", true);
+        xhttp.send();
+        location.reload();
+    }
+
+    function getBucket() {
+        var name = document.getElementById("inputName").value;
+        var address = document.getElementById("inputAddress").value;
+        var phone = document.getElementById("inputPhone").value;
+
+        var xhttp = new XMLHttpRequest();
+        xhttp.onreadystatechange = function () {
+            if (this.readyState == 4 && this.status == 200) {
+                var products = JSON.parse(this.responseText);
+                var list = '';
+                for (var i = 0; i < products.length; i++) {
+                    var bucket = products[i];
+                    list = list + bucket.count + ' - ' + bucket.name+'; ';
+                }
+                createOrder(name, address, phone, list)
+            }
+        };
+        xhttp.open("GET", "http://localhost:8080/bucket/findAll", true);
+        xhttp.send();
+    }
+
+    function createOrder(name, address, phone, productAndCount) {
+        var xmlhttp = new XMLHttpRequest();
+        xmlhttp.open("POST", "http://localhost:8080/createOrder");
+        xmlhttp.setRequestHeader("Content-Type", "application/json");
+        xmlhttp.send(JSON.stringify({name: name, address: address, phone: phone, productAndCount: productAndCount}));
+    }
+
+    getSum();
     getCountAndSum();
 </script>
 </body>
