@@ -92,7 +92,7 @@
                     <a href="/shopping-cart" title="Корзина">
                            <span id="cart-total">
                                <i class="fa fa-shopping-cart fa-lg"></i>&nbsp;
-                               <span class="hidden-xs"> 0 товаров - 0.00р</span>
+                               <span id="countAndSum" class="hidden-xs"> </span>
                            </span>
                     </a>
                 </div>
@@ -437,6 +437,33 @@
         xhttp.send(JSON.stringify({accountNumberUser: number, money: money, username:username}));
         infoAboutUser();
         }
+        function getCountAndSum() {
+            if (true){
+                var xhttp = new XMLHttpRequest();
+                xhttp.onreadystatechange = function () {
+                    if (this.readyState == 4 && this.status == 200) {
+                        var products = JSON.parse(this.responseText);
+                        var html = '';
+                        var summa = 0;
+                        var countProd = 0;
+                        for (var i = 0; i < products.length; i++) {
+                            var bucket = products[i];
+                            console.log(bucket);
+                            countProd = countProd+bucket.count;
+                            summa =summa + (bucket.cost*bucket.count);
+                        }
+//<a>1 товар- 533.00 $</a>
+                        html = '<a>'+countProd+' товар(ов)- '+summa+' р</a>'
+
+                        document.getElementById("countAndSum").innerHTML = html;
+                    }
+                };
+                xhttp.open("GET", "http://localhost:8080/bucket/findAll", true);
+                xhttp.send();
+            }
+        }
+
+        getCountAndSum();
 
 
     // infoAboutUser();

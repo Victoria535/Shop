@@ -11,10 +11,7 @@
     <link rel="stylesheet" type="text/css" href="jquery.bxslider.css">
     <link rel="stylesheet" type="text/css" href="colorbox.css">
     <link href="fonts.css" rel="stylesheet" type="text/css">
-    <link rel="stylesheet" type="text/css" href="product_slider.css" media="screen">
-    <link rel="stylesheet" type="text/css" href="product_tabs.css" media="screen">
-    <!--    <script type="text/javascript" src="js/jquery.min.js"></script>-->
-    <!--    <script type="text/javascript" src="js/jquery.cycle.js"></script>-->
+
 </head>
 <body>
 
@@ -26,59 +23,16 @@
             <!-- cart -->
             <div id="cart">
                 <div class="heading">
-                    <a title="Shopping Cart">
+                    <a href="/shopping-cart" title="Корзина">
                            <span id="cart-total">
                                <i class="fa fa-shopping-cart fa-lg"></i>&nbsp;
-                               <span class="hidden-xs">1 товар- 533.00 $</span>
+                               <span id="countAndSum" class="hidden-xs"></span>
                            </span>
                     </a>
                 </div>
-
-                <div class="content">
-                    <div class="inner">
-                        <div class="mini-cart-info">
-                            <table width="100%" cellspacing="0" cellpadding="0" border="0">
-                                <tbody>
-                                <tr>
-                                    <td class="image"><a href="">
-                                        <img src="salt.jpg">
-                                    </a>
-                                    </td>
-                                    <td class="name">
-                                        <a href="">Margarita</a>
-                                        <div>
-                                            - <small>Pizza weight 1200 grs</small>
-                                            <br>
-                                        </div>
-                                    </td>
-                                    <td class="quantity">x&nbsp;1</td>
-                                    <td class="total">450.00 $</td>
-                                    <td class="remove">
-                                        <button type="button" class="close" aria-hidden="true" title="Remove">×</button>
-                                    </td>
-                                </tr>
-                                </tbody>
-                            </table>
-                        </div>
-
-                        <div class="mini-cart-total">
-                            <table width="100%" cellspacing="0" cellpadding="0" border="0">
-                                <tbody>
-                                <tr>
-                                    <td class="name"><b>Итого:</b></td>
-                                    <td class="total">533.00 $</td>
-                                </tr>
-                                </tbody>
-                            </table>
-                        </div>
-
-                        <div class="checkout">
-                            <a class="btn btn-sm btn-success" href="/shopping-cart">Корзина</a>
-                            <a class="btn btn-sm btn-success" href="checkout.html">Оплатить</a>
-                        </div>
-                    </div>
-                </div>
             </div>
+
+
             <div class="divider"></div>
 
             <!-- menu -->
@@ -135,16 +89,16 @@
             <div class="row">
                 <div class="col-sm-4">
                     <div class="social hidden-xs">
-                        <a href="#" target="_blank" title="Pizza Chef Instagram">
+                        <a href=""  title="Instagram">
                             <span class="fa fa-instagram"></span>
                         </a>
-                        <a href="#" target="_blank" title="Pizza Chef Twitter">
+                        <a href="" title="Twitter">
                             <span class="fa fa-twitter"></span>
                         </a>
-                        <a href="#" target="_blank" title="Pizza Chef Vkontakte">
+                        <a href=""  title="Vkontakte">
                             <span class="fa fa-vk"></span>
                         </a>
-                        <a href="#" target="_blank" title="Pizza Chef YouTube">
+                        <a href=""  title="YouTube">
                             <span class="fa fa-youtube"></span>
                         </a>
                     </div>
@@ -234,8 +188,8 @@
                             <td class="text-right">
                                 <strong>Итого:</strong>
                             </td>
-                            <td class="text-right">
-                                533.00 $
+                            <td id="sum" class="text-right">
+
                             </td>
                         </tr>
                         </tbody>
@@ -301,7 +255,7 @@
                         '                                            </a>\n' +
                         '                                        </td>\n' +
                         '                                        <td class="name">\n' +
-                        '                                            <a href="">' + bucket.name + '</a>\n' +
+                        '                                            <a href="/product">' + bucket.name + '</a>\n' +
                         '                                            <div> \n' +
                         '                                                - <small>' + bucket.description + '</small><br>\n' +
                         '                                            </div>\n' +
@@ -345,6 +299,56 @@
         location.reload()
     }
 
+    function getSum() {
+        if (true){
+            var xhttp = new XMLHttpRequest();
+            xhttp.onreadystatechange = function () {
+                if (this.readyState == 4 && this.status == 200) {
+                    var products = JSON.parse(this.responseText);
+                    var html = '';
+                    var summa = 0;
+                    for (var i = 0; i < products.length; i++) {
+                        var bucket = products[i];
+                        console.log(bucket);
+                        summa =summa + (bucket.cost*bucket.count);
+                    }
+
+                    html = '<a>'+summa+'</a>'
+
+                    document.getElementById("sum").innerHTML = html;
+                }
+            };
+            xhttp.open("GET", "http://localhost:8080/bucket/findAll", true);
+            xhttp.send();
+        }
+    }
+
+    function getCountAndSum() {
+        if (true){
+            var xhttp = new XMLHttpRequest();
+            xhttp.onreadystatechange = function () {
+                if (this.readyState == 4 && this.status == 200) {
+                    var products = JSON.parse(this.responseText);
+                    var html = '';
+                    var summa = 0;
+                    var countProd = 0;
+                    for (var i = 0; i < products.length; i++) {
+                        var bucket = products[i];
+                        console.log(bucket);
+                        countProd = countProd+bucket.count;
+                        summa =summa + (bucket.cost*bucket.count);
+                    }
+//<a>1 товар- 533.00 $</a>
+                    html = '<a>'+countProd+' товар(ов)- '+summa+' р</a>'
+
+                    document.getElementById("countAndSum").innerHTML = html;
+                }
+            };
+            xhttp.open("GET", "http://localhost:8080/bucket/findAll", true);
+            xhttp.send();
+        }
+    }
+
     function increment(bucketId) {
         if (true) {
             var xhttp = new XMLHttpRequest();
@@ -370,7 +374,8 @@
     }
 
     showBucket();
-
+    getSum();
+    getCountAndSum();
 </script>
 <script type="text/javascript" src="js/bootstrap.min.js"></script>
 <script type="text/javascript" src="js/jquery.bxslider.min.js"></script>

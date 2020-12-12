@@ -12,7 +12,7 @@ import lombok.NoArgsConstructor;
 public class ProductDTO {
     private Long id;
     private String name;
-    private String cost;
+    private Integer cost;
     private String description;
     private String path;
 }
