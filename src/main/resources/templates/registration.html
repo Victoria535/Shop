@@ -1,137 +1,243 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="https://www.thymeleaf.org">
 <head>
-    <meta charset="UTF-8">
-    <title>Registration</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.min.css" />
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" />
+    <title>Регистрация </title>
+    <meta charset="utf-8">
+
+    <link rel="stylesheet" type="text/css" href="font-awesome.min.css">
+    <link rel="stylesheet" type="text/css" href="bootstrap.css">
+    <link rel="stylesheet" type="text/css" href="style.css">
+    <link rel="stylesheet" type="text/css" href="jquery.bxslider.css">
+    <link rel="stylesheet" type="text/css" href="colorbox.css">
+    <link href="fonts.css" rel="stylesheet" type="text/css">
 </head>
-<style>
-    @import url(https://fonts.googleapis.com/css?family=Open+Sans:300);
-    * {
-        font-family: 'Open Sans', sans-serif;
-    }
-
-    body {
-        margin: 0;
-        padding: 0;
-        overflow: hidden;
-        /*background: rgba(75, 75, 116, 0.4);*/
-        background: rgba(0,39,143,0.43);
-
-    }
-
-    .signupSection {
-        background: url(https://source.unsplash.com/TV2gg2kZD1o/1600x800) no-repeat;
-        position: absolute;
-        top: 50%;
-        left: 50%;
-        transform: translate(-50%, -50%);
-        width: 800px;
-        height: 450px;
-        text-align: center;
-        display: flex;
-        color: white;
-        box-shadow: 3px 10px 20px 5px rgba(0, 0, 0, .5);
-    }
-
-    .info {
-        width: 45%;
-        background: rgba(44, 87, 87, 0.8);
-        padding: 30px 0;
-        border-right: 5px solid rgba(30, 30, 30, .8);
-    }
-
-    .info h2 {
-        padding-top: 30px;
-        font-weight: 300;
-    }
-    .info p {
-        font-size: 18px;
-    }
-    .icon {
-        font-size: 8em;
-        padding: 20px 0;
-        color: rgba(10, 180, 180, 1);
-    }
-
-
-    .signupForm {
-        width: 70%;
-        width: 70%;
-        padding: 30px 0;
-        background: rgba(20, 40, 40, .8);
-        transition: .2s;
-    }
-    .signupForm h2 {
-        font-weight: 300;
-    }
-
-
-    .inputFields {
-        margin: 15px 0;
-        font-size: 16px;
-        padding: 10px;
-        width: 250px;
-        border: 1px solid rgba(10, 180, 180, 1);
-        border-top: none;
-        border-left: none;
-        border-right: none;
-        background: rgba(20, 20, 20, .2);
-        color: white;
-        outline: none;
-    }
-
-    .noBullet {
-        list-style-type: none;
-        padding: 0;
-    }
-
-    #join-btn {
-        border: 1px solid rgba(10, 180, 180, 1);
-        background: rgba(20, 20, 20, .6);
-        font-size: 18px;
-        color: white;
-        margin-top: 20px;
-        padding: 10px 50px;
-        cursor: pointer;
-        transition: .4s;
-    }
-    #join-btn:hover {
-        background: rgba(20, 20, 20, .8);
-        padding: 10px 80px;
-    }
-
-
-</style>
 
 <body>
-<div class="back">
-<div class="signupSection">
-    <div class="info">
-        <h2>Добро пожаловать</h2>
-        <i class="icon ion-ios-ionic-outline" aria-hidden="true"></i>
-        <p>Наш магазин тебя ждет</p>
+
+
+
+<div class="wrap">
+    <!-- top panel -->
+    <div class="navbar navbar-inverse navbar-fixed-top topbar">
+        <div class="container">
+
+            <!-- cart -->
+            <div id="cart">
+                <div class="heading">
+                    <a href="/shopping-cart" title="Корзина">
+                           <span id="cart-total">
+                               <i class="fa fa-shopping-cart fa-lg"></i>&nbsp;
+                               <span class="hidden-xs"> 0 товаров - 0.00р</span>
+                           </span>
+                    </a>
+                </div>
+            </div>
+
+
+            <!-- menu -->
+            <div id="menu" class="menu-container">
+
+                <div class="collapse menu-collapse" id="menu-mobile">
+                    <ul class="nav nav-pills">
+                        <li><a href="">Овощи и фрукты<i class="fa fa-angle-down"></i></a>
+                            <div>
+                                <div class="arrow"></div>
+                                <ul>
+                                    <li><a href="">Овощи</a></li>
+                                    <li><a href="">Фрукты</a></li>
+                                    <li><a href="">Грибы</a></li>
+                                    <li><a href="">Зелень</a></li>
+                                </ul>
+                            </div>
+                        </li>
+                        <li>
+                            <a href="">Хлеб<i class="fa fa-angle-down"></i></a>
+                            <div>
+                                <div class="arrow"></div>
+                                <ul>
+                                    <li><a href="">Хлеб и сдоба</a></li>
+                                    <li><a href="">Кондитерские изделия</a></li>
+                                </ul>
+                            </div>
+                        </li>
+                        <li><a href="">Молочные продукты</a></li>
+
+                        <li><a href="">Бакалея<i class="fa fa-angle-down"></i></a></li>
+                        <li><a href="">Мясо, рыба</a></li>
+                        <li><a href="">Напитки</a></li>
+
+                    </ul>
+                </div>
+            </div>
+            <div class="divider hidden-sm hidden-xs"></div>
+
+        </div>
     </div>
-    <form th:action="@{/login}" method="POST" class="signupForm" name="signupform">
-        <h2>Регистрация</h2>
-        <ul class="noBullet">
-            <li>
-                <label for="username"></label>
-                <input type="text" class="inputFields" id="username" name="username" placeholder="Username" value="" oninput="return userNameValidation(this.value)" required/>
-            </li>
-            <li>
-                <label for="password"></label>
-                <input type="password" class="inputFields" id="password" name="password" placeholder="Password" value="" oninput="return passwordValidation(this.value)" required/>
-            </li>
-            <span class="text"> <a href="/login">Войти</a></span>
-            <li id="center-btn">
-                <input type="submit" onclick="createUser()" id="join-btn" name="Регистрация" alt="Регистрация" value="Регистрация">
-            </li>
-        </ul>
-    </form>
+    <!-- //top panel -->
+
+    <!-- header -->
+    <div class="header">
+        <div class="container">
+
+            <div class="row">
+                <div class="col-sm-4">
+                    <div class="social hidden-xs">
+                        <a title="Instagram">
+                            <span class="fa fa-instagram"></span>
+                        </a>
+                        <a title="Twitter">
+                            <span class="fa fa-twitter"></span>
+                        </a>
+                        <a title="Vkontakte">
+                            <span class="fa fa-vk"></span>
+                        </a>
+                        <a title="YouTube">
+                            <span class="fa fa-youtube"></span>
+                        </a>
+                    </div>
+
+                    <div class="header-left">
+                        <div id="address">
+                            <p><strong>График работы:</strong></p>
+                            <p>пн-пт <strong>10:00 - 18:00</strong>, сб-вс <strong>9:00 - 19:00</strong></p>
+                        </div>
+                        <div id="phone"><span>(29)</span> 234-34-34</div>
+                    </div>
+                </div>
+
+                <div class="col-sm-4">
+                    <div id="logo">
+                        <a href="/"><img src="shop.jpg" width="150" height="150"></a>
+                    </div>
+                </div>
+
+                <div class="col-sm-4">
+                    <div id="search">
+                        <div class="input-group">
+                            <input type="text" name="search" class="form-control" placeholder="Search" value="">
+                            <span class="input-group-btn">
+                                    <button onclick="searchByName()" class="btn btn-default button-search" type="button">
+                                        <span class="fa fa-search"></span>
+                                    </button>
+                                </span>
+                        </div>
+                    </div>
+
+                    <div class="header-right">
+                        <div id="welcome">
+                            Добро пожаловать, покупатель, ты можешь <a href="/login">войти</a> или <a href="/registration">зарегистрироваться</a>.
+                        </div>
+
+                        <div class="links">
+                            <a id="link-cart" href="/shopping-cart">
+                                <i class="fa fa-shopping-cart"></i> Корзина
+                            </a><br>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- //header -->
+
+
+
+    <!--регистрация-->
+    <div id="container" class="content">
+        <div class="container">
+            <div id="content">
+
+                <ol class="breadcrumb">
+                    <li><a href="/">Главная</a></li>
+                    <li><a href="/registartion">Регистрация</a></li>
+                </ol>
+
+                <div class="page-header">
+                    <h1>Регистрация</h1>
+                </div>
+
+                <div class="login-content row">
+
+                    <div class="right col-sm-6">
+                        <form th:action="@{/login}" method="POST" name="signupform">
+                            <div class="content">
+                                <p class="help-block"><strong>Новый аккаунт</strong></p>
+
+                                <div class="form-group">
+                                    <label for="username">Логин</label>
+                                    <input type="text" class="form-control"  id="username" name="username" placeholder="Введите логин..." value="" oninput="return userNameValidation(this.value)" required>
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="password">Пароль:</label>
+                                    <input type="password" class="form-control" id="password" name="password" placeholder="Введите пароль..." value="" oninput="return passwordValidation(this.value)" required>
+                                </div>
+                                <div class="form-group">
+                                    <a href="/login" class="pull-right btn btn-link btn-xs">Войти</a>
+
+                                    <input type="submit"  onclick="createUser()" id="join-btn" name="Регистрация" alt="Регистрация" value="Регистрация"class="btn btn-warning">
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- footer -->
+    <div id="footer" class="footer">
+        <div class="container">
+            <div class="row">
+                <div class="col-sm-3">
+                    <div class="column">
+                        <h4>Информация</h4>
+                        <ul>
+                            <li><a href="about-us.html">О нас</a></li>
+
+                        </ul>
+                    </div>
+                </div>
+                <div class="col-sm-3 text-right">
+                    <div id="powered">
+                        <a>Create by Vika</a>
+                        <br>
+                        Shop © 2020
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- //footer -->
 </div>
-</div>
+
+<!--    <div class="back">-->
+<!--<div class="signupSection">-->
+<!--    <div class="info">-->
+<!--        <h2>Добро пожаловать</h2>-->
+<!--        <i class="icon ion-ios-ionic-outline" aria-hidden="true"></i>-->
+<!--        <p>Наш магазин тебя ждет</p>-->
+<!--    </div>-->
+<!--    <form th:action="@{/login}" method="POST" class="signupForm" name="signupform">-->
+<!--        <h2>Регистрация</h2>-->
+<!--        <ul class="noBullet">-->
+<!--            <li>-->
+<!--                <label for="username"></label>-->
+<!--                <input type="text" class="inputFields" id="username" name="username" placeholder="Username" value="" oninput="return userNameValidation(this.value)" required/>-->
+<!--            </li>-->
+<!--            <li>-->
+<!--                <label for="password"></label>-->
+<!--                <input type="password" class="inputFields" id="password" name="password" placeholder="Password" value="" oninput="return passwordValidation(this.value)" required/>-->
+<!--            </li>-->
+<!--            <span class="text"> <a href="/login">Войти</a></span>-->
+<!--            <li id="center-btn">-->
+<!--                <input type="submit" onclick="createUser()" id="join-btn" name="Регистрация" alt="Регистрация" value="Регистрация">-->
+<!--            </li>-->
+<!--        </ul>-->
+<!--    </form>-->
+<!--</div>-->
+<!--</div>-->
 <script>
 
     function createUser() {
