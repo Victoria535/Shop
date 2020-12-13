@@ -12,6 +12,9 @@
     <link rel="stylesheet" type="text/css" href="jquery.bxslider.css">
     <link rel="stylesheet" type="text/css" href="colorbox.css">
     <link href="fonts.css" rel="stylesheet" type="text/css">
+    <link rel="stylesheet" type="text/css" href="product_slider.css" media="screen">
+    <link rel="stylesheet" type="text/css" href="product_tabs.css" media="screen">
+
 
 </head>
 <body>
@@ -225,7 +228,7 @@
                     var bucket = products[i];
                     console.log(bucket);
                     html = html + '<tr>\n' +
-                        '                                        <td class="model"><button type="submit" onclick="deleteProductFromBucket(' + bucket.id + ')">Delete</button></td>\n' +
+                        '                                        <td class="model"><button type="submit" class="delete"onclick="deleteProductFromBucket(' + bucket.id + ')" ></button></td>\n' +
                         '                                        <td class="image">\n' +
                         '                                            <a href="">\n' +
                         '                                                <img src="' + bucket.path + '" width="80" height="80">\n' +

@@ -12,8 +12,6 @@
     <link href="fonts.css" rel="stylesheet" type="text/css">
     <link rel="stylesheet" type="text/css" href="product_slider.css" media="screen">
     <link rel="stylesheet" type="text/css" href="product_tabs.css" media="screen">
-    <script type="text/javascript" src="js/jquery.min.js"></script>
-    <script type="text/javascript" src="js/jquery.cycle.js"></script>
 </head>
 
 <body>
@@ -147,7 +145,7 @@
         <div class="content">
             <p class="help-block"><strong>У меня есть аккаунт</strong></p>
             <div class="form-group" th:if="${param.error}">
-                Invalid username and password.
+                Неверный логин или пароль
             </div>
             <div class="form-group">
                 <label for="username">Логин</label>

@@ -11,6 +11,9 @@
     <link rel="stylesheet" type="text/css" href="jquery.bxslider.css">
     <link rel="stylesheet" type="text/css" href="colorbox.css">
     <link href="fonts.css" rel="stylesheet" type="text/css">
+    <link rel="stylesheet" type="text/css" href="product_slider.css" media="screen">
+    <link rel="stylesheet" type="text/css" href="product_tabs.css" media="screen">
+
 </head>
 <style>
 
@@ -91,10 +94,10 @@
                 <div class="heading">
                     <a href="/shopping-cart" title="Корзина">
                            <span id="cart-total">
-                               <i class="fa fa-shopping-cart fa-lg"></i>&nbsp;
+                               <i class="fa fa-shopping-cart fa-lg"></i>
                                <span id="countAndSum" class="hidden-xs"> </span>
                            </span>
-                    </a>
+                        </a>
                 </div>
             </div>
 
@@ -198,7 +201,7 @@
 
         <ul id="product-tabs-0" class="nav nav-tabs">
             <li class="active">
-                <a href="#product-tab-0-featured" data-toggle="tab">
+                <a>
                     <span>Популярное</span>
                 </a>
             </li>
@@ -360,8 +363,10 @@
                 for (var i = 0; i < products.length; i++) {
                     var product = products[i];
                     console.log(product);
-                    html = html + '<div class="box-content tab-content" id="product-slideshow0">\n' +
-                        '     <div class="box-product product-grid tab-pane fade in active" id="product-tab-0-featured">\n' +
+                    html = html + '' +
+                        // '<li class="product-wrapper">\n'+
+                        // '<div class="box-content tab-content">\n' +
+                        '     <div class="box-product product-grid fade in active">\n' +
                         '   <!-- Begin box-product div -->\n' +
                         '            <div class="item">\n' +
                         '                <div class="image">\n' +
@@ -380,13 +385,14 @@
                         '                    </div>\n' +
                         '                    <div class="cart">\n' +
                         '                        <button sec:authorize="isAuthenticated()" onclick="saveToBucket(' + product.id + ')" type="button" class="btn btn-success">\n' +
-                        '                            <i class="fa fa-shopping-cart"></i> <span>Добавить в корзину</span>\n' +
+                        '                        <button sec:authorize="!isAuthenticated()" onclick="alertReg()" type="button" class="btn btn-success">\n' +
+
+                        '                            <i class="icon-cart"></i> <span>Добавить в корзину</span>\n' +
                         '                        </button>\n' +
                         '                    </div></div></div>\n' +
                         '</div>\n' +
-                        ' </div>\n' +
-                        '</div>\n' +
-                    '   </div>\n';
+                        // ' </div>\n' +
+                        '</div>\n';
                 }
                 document.getElementById("productList").innerHTML = html;
             }
@@ -478,6 +484,10 @@
                 xhttp.open("GET", "http://localhost:8080/bucket/findAll", true);
                 xhttp.send();
             }
+        }
+        function alertReg () {
+            alert('Необходимо сначала войти или зарегистрироваться');
+
         }
 
         getCountAndSum();
